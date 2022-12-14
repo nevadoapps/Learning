@@ -6,11 +6,12 @@ Table of Contents
   - Styling
   - Quoting Code
   - Creating Highlighting Code Blocks
+  - Relative Links
+  - Lists
+  - Task lists
+  - Footnotes
 
-<details>
-  <summary>Basic and Advanced Github Formatting
-</summary>
-<p>
+## Basic and Advanced Github Formatting
 <details>
   <summary>
     Headings
@@ -81,6 +82,97 @@ You can create tables with pipes | and hyphens -,. Hyphens are used to create ea
   </p>
 </details>
 
+<details>
+  <summary>
+  Relative links
+  </summary>
+  <p>
+  You can define relative links and image paths in your rendered files to help readers navigate to other files in your repository.
 
-<p>
+  A relative link is a link that is relative to the current file. For example, if you have a README file in your root of your repository, and you have another file in docs/CONTRIBUTING.md, the relative link to CONTRIBUTING.md in your README.md might look like:
+
+  Syntax:
+  ```
+  [Contributing guidelines for this project](docs/CONTRIBUTING.md)
+  ```
+  Output:
+  [Contributing guidelines for this project](docs/CONTRIBUTING.md)
+  </p>
+</details>
+
+<details>
+  <summary>
+  Lists
+  </summary>
+  <p>
+  You can make an unordered list by preceding one or more lines of text with -, *, or +.
+
+  Syntax:
+
+  <quote>
+  - CSharp
+  + CSharp
+  * CSharp
+  </quote>
+
+  Output:
+  - CSharp
+  + CSharp
+  * CSharp
+  </p>
+
+  To order your list, precede each line with a number.
+  Syntax:
+  <quote>
+  1. CSharp
+  2. CSharp
+  3. CSharp    
+  </quote>
+
+  Output:
+  1. CSharp
+  2. CSharp
+  3. CSharp
+</details>
+
+<details>
+  <summary>
+  Task lists
+  </summary>
+  <p>
+To create a task list, preface list items with a hyphen and space followed by [ ]. T
+To mark a task as complete, use [x].
+
+Syntax:
+<quote>
+  - [x] #739
+  - [ ] https://github.com/octo-org/octo-repo/issues/740
+  - [ ] Add delight to the experience when all tasks are complete :tada:
+</quote>
+
+Output:
+- [x] #739
+- [ ] https://github.com/octo-org/octo-repo/issues/740
+- [ ] Add delight to the experience when all tasks are complete :tada:
+  </p>
+</details>
+
+<details>
+  <summary>
+  Footnotes
+  </summary>
+  <p>
+  You can use add footnotes to your content by using this bracket syntax:
+
+  Example:
+  
+  Here is a simple footnote[^1].
+
+  [^1]: My footnote reference.
+
+  Output:
+Here is a simple footnote[^1].
+
+[^1]: My footnote reference.  
+  </p>
 </details>
