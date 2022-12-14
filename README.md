@@ -5,9 +5,12 @@ Table of Contents
   - Headings
   - Styling
   - Quoting Code
+  - Creating Highlighting Code Blocks
 
-
-## Basic and Advanced Github Formatting
+<details>
+  <summary>Basic and Advanced Github Formatting
+</summary>
+<p>
 <details>
   <summary>
     Headings
@@ -19,8 +22,9 @@ Table of Contents
   - # The largest heading
   - ## The second largest heading
   - ###### The smallest heading
-  </p>
+</p>
 </details>
+
 <details>
   <summary>
     Styling
@@ -38,4 +42,45 @@ You can create tables with pipes | and hyphens -,. Hyphens are used to create ea
 | Subscript	| <sub> </sub> | | <sub> This is a subscript text </sub> |	This is a subscript text| 
 | Superscript	| <sup> </sup> | | <sup>This is a superscript text</sup> |	This is a superscript text |
 </p>
+</details>
+
+<details>
+  <summary>
+  Quoting Code
+  </summary>
+  <p>
+  You can call out code or command within a sentence with single backticks. (AltGr + , / ş or Ctrl + E) The text within the backticks will not be formatted. 
+
+  Example: 
+  git status 
+  git add
+  git commit
+
+  Some basic Git commands are:
+  ```
+  git status
+  git add
+  git commit
+  ```
+  </p>
+</details>
+
+<details>
+  <summary>
+    Creating Highlighting Code Blocks
+  </summary>
+  <p>
+  You can create fenced code blocks by placing triple backticks ``` before and after the code block. We recommend placing a blank line before and after code blocks to make the raw formatting easier to read.
+
+  Example:
+  using System.Collections as;
+
+  ```csharp
+  using System.Collections;
+  ```
+  </p>
+</details>
+
+
+<p>
 </details>
