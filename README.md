@@ -162,7 +162,7 @@ Output:
   Footnotes
   </summary>
   <p>
-  You can use add footnotes to your content by using this bracket syntax:
+  You can use add footnotes to your content by using this bracket syntax [ ^ 1 ]:
 
   Example:
 
