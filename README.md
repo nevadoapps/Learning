@@ -14,5 +14,5 @@ To create a heading, add one to six # symbols before your heading text. The numb
   </p>
 </details>
 
-Seha
+Seha Yetginer
 
