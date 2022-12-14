@@ -1,4 +1,4 @@
-# GitHub Usage
+# GitHub Documentation Syntax
 
 Table of Contents
 - Basic and Advanced Github Formatting
@@ -165,7 +165,7 @@ Output:
   You can use add footnotes to your content by using this bracket syntax:
 
   Example:
-  
+
   Here is a simple footnote[^1].
 
   [^1]: My footnote reference.
