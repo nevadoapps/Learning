@@ -1,3 +1,5 @@
-# Learning
+# GitHub Usage
 
-Design Patterns
+## Basic and Advanced Github Formatting
+
+####### Headings
