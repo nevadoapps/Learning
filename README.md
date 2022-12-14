@@ -6,7 +6,7 @@ Table of Contents
 
 <details>
   <summary>
-  ## Basic and Advanced Github Formatting
+  Basic and Advanced Github Formatting
   </summary>
   <p>
 #### Headings
