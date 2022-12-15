@@ -6,7 +6,7 @@ Table of Contents:
 4. The Data Type Class Hierarchy
 5. Parsing Values and Using TryParse from String Data
 6. Working with String Data
-7. String Interpolation and Escape Characters
+7. String Interpolation and Escape Characters, Verbatim Strings
 
 <details>
 <summary>
@@ -271,3 +271,99 @@ Console.WriteLine($"Comparison of vString and vString2: {vString.CompareTo(vStri
 ```
 </p>
 </summary>
+</details>
+
+<details>
+<summary>
+
+## 7. String Interpolation and Escape Characters, Verbatim Strings
+</summary>
+<p>
+
+| Character | Meaning in Life |
+| -- | -- |
+| \' | Inserts a single quote into a string literal |
+| \" | Inserts a double quote into a string literal |
+| \\ | Inserts a backslash into a string literal. This can be quite helpful when defining file or network paths. |
+| \a | Triggers a system alert |
+| \n | Inserts a new line |
+| \r | Inserts a carriage return |
+| \t | Inserts a horizontal tab into the string literal |
+
+## String Interpolation
+
+1. String.Format can be used for String Interpolation.
+
+Example: 
+```csharp
+int age = 4;
+string name = "Seha";
+string greeting = string.Format("Hello {0} you are {1} years old.", name, age);
+```
+
+2. $ sign can be used for String Interpolation.
+
+Example:
+```csharp
+int age = 4;
+string name = "Seha";
+string greeting = $"Hello {name} you are {age} year old.";
+```
+</p>
+</details>
+
+## Verbatim Strings
+
+When you prefix a string literal with the @ symbol, you have created what is termed a **verbatim string**. 
+
+Using verbatim strings, you disable the processing of a literal's escape characters and print out a string as is. This can be most useful when working with strings representing directory and network paths.
+
+Example: 
+```csharp
+Console.WriteLine(@"C:\MyApp\Seha\Executable.exe");
+string myLongString = @"This is a very 
+    very long
+        string that I can give you an example of.";
+
+Console.WriteLine(myLongString);
+```
+
+Verbatim string can also be interpolated string, by specifying both the interpolation operator ($) and the verbatim operator (@).
+
+Example: 
+```csharp
+string interp = "interpolation";
+string myLongString2 = $@"This is a very 
+    very 
+        long string with {interp}";
+```
+
+## Strings and Equality
+The C# equality operators by default perform a case-sensitive, culture-sensitive, character-by-character equality test on string objects.
+
+One of the interesting aspects of System.String is that after you assign object with its initial value, the character data cannot be changed. You are always reassigning strings to new values and because the System.String type defines a number of method that appear to modify the character data in one way or another.
+
+```csharp
+Console.WriteLine("=> String equality");
+string s1 = "Hello!";
+string s2 = "Yo!";
+
+Console.WriteLine($"s1 = {s1}");
+Console.WriteLine($"s2 = {s2}");
+Console.WriteLine();
+
+//False
+Console.WriteLine($"s1 == s2, {s1 == s2}");
+//True
+Console.WriteLine($"s1 == s1, {s1 == s1}");
+//True
+Console.WriteLine($"s1 == Hello!: {s1 == "Hello!"}");
+//False
+Console.WriteLine($"s1 == hello!: {s1 == "hello!"}");
+//False
+Console.WriteLine($"s1.Equals(s2): {s1.Equals(s2)}");
+//False
+Console.WriteLine($"Yo.Equals(s2): {"Yo".Equals(s2)}");
+//True
+Console.WriteLine($"s1.Equals(s1): {s1.Equals(s1)}");
+```
