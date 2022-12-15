@@ -128,14 +128,14 @@ Console.WriteLine($"Default value of x: {x}"); // 0
 
 ```mermaid
 graph TD;
-UInt16-->Value Type;
-UInt32-->Value Type;
-UInt64-->Value Type;
-Void-->Value Type;
-DateTime-->Value Type;
-Guid-->Value Type;
-TimeSpan-->Value Type;
-Single-->Value Type;
+UInt16-->Value_Type;
+UInt32-->Value_Type;
+UInt64-->Value_Type;
+Void-->Value_Type;
+DateTime-->Value_Type;
+Guid-->Value_Type;
+TimeSpan-->Value_Type;
+Single-->Value_Type;
 ```
 </p>
 </details>
