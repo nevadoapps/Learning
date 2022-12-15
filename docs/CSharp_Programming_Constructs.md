@@ -1,4 +1,4 @@
-# Learning C# and Object Oriented Programming
+# Core C# Programming Constructs
 Table of Contents:
 1. The anatomy of a simple C# program
 2. System Data Types and corresponding C# Keywords
@@ -309,8 +309,6 @@ int age = 4;
 string name = "Seha";
 string greeting = $"Hello {name} you are {age} year old.";
 ```
-</p>
-</details>
 
 ## Verbatim Strings
 
@@ -367,3 +365,7 @@ Console.WriteLine($"Yo.Equals(s2): {"Yo".Equals(s2)}");
 //True
 Console.WriteLine($"s1.Equals(s1): {s1.Equals(s1)}");
 ```
+
+## Cheched and Unchecked Keywords
+</p>
+</details>
