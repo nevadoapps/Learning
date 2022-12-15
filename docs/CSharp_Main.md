@@ -4,7 +4,9 @@ Table of Contents:
 2. System Data Types and corresponding C# Keywords
 
 <details>
-    <summary>##The anatomy of a simple C# program
+<summary>
+
+## The anatomy of a simple C# program
 </summary>
 <p>
 C# demands that all program logic be contained within a type definition. (type is a general term referring to a member of the set, class, interface, structure, enumeration, delegate).
@@ -34,12 +36,14 @@ class Program
 
 <details>
 <summary>
-System Data Types and corresponding C# Keywords
+
+## System Data Types and corresponding C# Keywords
 </summary>
 <p>
-| C# Shorthand | CLS Compliant | System Type | Range | Meaning in Life |
-| bool | Yes | Boolean | true or false | Represents truth or falsity |
-| sbyte | No | SByte | -128 to 127 | Signed 8-bit number |
-| byte | Yes | Byte | 0 to 255 | Unsigned 8-bit number | 
+
+    | C# Shorthand | CLS Compliant | System Type | Range | Meaning in Life |
+    | bool | Yes | Boolean | true or false | Represents truth or falsity |
+    | sbyte | No | SByte | -128 to 127 | Signed 8-bit number |
+    | byte | Yes | Byte | 0 to 255 | Unsigned 8-bit number | 
 </p>
 </details>
