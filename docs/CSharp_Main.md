@@ -3,6 +3,7 @@ Table of Contents:
 1. The anatomy of a simple C# program
 2. System Data Types and corresponding C# Keywords
 3. How to find default and Min/Max Values of C# Types
+4. The Data Type Class Hierarchy
 
 <details>
 <summary>
@@ -83,6 +84,7 @@ Console.WriteLine($"ulong, Min: {ulong.MinValue}, Max: {ulong.MaxValue}");
 Console.WriteLine($"float, Min: {float.MinValue}, Max: {float.MaxValue}");
 Console.WriteLine($"double, Min: {double.MinValue}, Max: {double.MaxValue}");
 Console.WriteLine($"decimal, Min: {decimal.MinValue}, Max: {decimal.MaxValue}");
+Console.WriteLine($"double: Negative Infinity: {double.NegativeInfinity}, Positive Infinity: {double.PositiveInfinity}");
 ```
 
 The following table shows the default values of C# types:
@@ -98,13 +100,35 @@ The following table shows the default values of C# types:
 | struct | The value produced by setting all value-type fields to their default values and all reference-type fields to null. |
 | Any nullable value type | An instance for which the HasValue property is false and the Value property is undefined. That default value is also known as the null value of a nullable value type. |
 
-**Note:** 
-1. Be aware that it is a compiler error to make use of a local variable before assigning an initial value. It is good practice to assign an initial value to your local data points at the time of declaration.
-2. Since 7.1, the default literal assigns a variable the default value for its data type. This works for standard data types as well as custom classes and generic types.
 
 ```csharp
 int x = default;
 Console.WriteLine($"Default value of x: {x}"); // 0
 ```
+
+**Note:** 
+1. Be aware that it is a compiler error to make use of a local variable before assigning an initial value. It is good practice to assign an initial value to your local data points at the time of declaration.
+2. Since 7.1, the default literal assigns a variable the default value for its data type. This works for standard data types as well as custom classes and generic types.
+3. All intrinsic data types support what is known as a default constructor. This feature allows you to create a variable using the new keyword, which automatically sets the variable to its default value;
+    - bool variables are set to false
+    - Numeric data is set to 0/0.0
+    - char variables are set to single empty character
+    - BigInteger variables are set to 0
+    - DateTime variables are set to 1/1/0001 12:00:00 AM
+    - Object references (including strings) are set to null
 </p>    
+</details>
+
+<details>
+<summary>
+
+## The Data Type Class Hierarchy
+</summary>
+<p>
+
+```mermaid
+graph TD;
+UInt16-->ValueType;
+```
+</p>
 </details>
