@@ -1,6 +1,7 @@
 # Learning C# and Object Oriented Programming
 Table of Contents:
 1. The anatomy of a simple C# program
+2. System Data Types and corresponding C# Keywords
 
 <details>
     <summary>##The anatomy of a simple C# program
@@ -29,3 +30,16 @@ class Program
 }
 ```
 </p>
+</details>
+
+<details>
+<summary>
+System Data Types and corresponding C# Keywords
+</summary>
+<p>
+| C# Shorthand | CLS Compliant | System Type | Range | Meaning in Life |
+| bool | Yes | Boolean | true or false | Represents truth or falsity |
+| sbyte | No | SByte | -128 to 127 | Signed 8-bit number |
+| byte | Yes | Byte | 0 to 255 | Unsigned 8-bit number | 
+</p>
+</details>
