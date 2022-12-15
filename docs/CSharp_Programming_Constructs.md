@@ -7,6 +7,13 @@ Table of Contents:
 5. Parsing Values and Using TryParse from String Data
 6. Working with String Data
 7. String Interpolation and Escape Characters, Verbatim Strings
+8. The Checked and Unchecked Keyword
+9. C# Iteration Constructs
+   - for loop
+   - foreach/in loop
+   - while loop
+   - do/while loop
+10. The if/else & switch statement
 
 <details>
 <summary>
@@ -365,7 +372,239 @@ Console.WriteLine($"Yo.Equals(s2): {"Yo".Equals(s2)}");
 //True
 Console.WriteLine($"s1.Equals(s1): {s1.Equals(s1)}");
 ```
+</p>
+</details>
 
-## Cheched and Unchecked Keywords
+<details>
+<summary>
+
+## 8. The Checked and Unchecked Keyword
+</summary>
+<p>
+
+The **checked** and **unchecked** statements specify the overflow-checking context for integral-type arithmetic operations and conversions. 
+
+Example - 1:
+In the case of addition it wraps from the maximum value to the minimum value. The following example shows both the same operation in both a checked and unchecked context.
+```csharp
+uint a = uint.MaxValue;
+
+unchecked
+{
+    Console.WriteLine(a + 1);  // output: 0
+}
+
+try
+{
+    checked
+    {
+        Console.WriteLine(a + 1);
+    }
+}
+catch (OverflowException e)
+{
+    Console.WriteLine(e.Message);  // output: Arithmetic operation resulted in an overflow.
+}
+```
+
+Example -2:
+To specify the overflow-checking context for an expression, you can also use the checked and unchecked operators, as the following example shows.
+
+```csharp
+double a = double.MaxValue;
+
+int b = unchecked((int)a);
+Console.WriteLine(b);  // output: -2147483648
+
+try
+{
+    b = checked((int)a);
+}
+catch (OverflowException e)
+{
+    Console.WriteLine(e.Message);  // output: Arithmetic operation resulted in an overflow.
+}
+```
+</p>
+</details>
+
+<details>
+<summary>
+
+## 9. C# Iteration Constructs
+</summary>
+<p>
+
+## The for Loop
+A basic for loop
+
+```csharp
+for (int i = 0; i<10;i++)
+{
+    Console.WriteLine($"Current iterator index is: {i}");
+}
+```
+
+## The foreach Loop
+The C# foreach keyword allows you to iterate over all items in a container without the need to test for an upper limit.
+
+```csharp
+string[] carTypes = {"Ford", "Tesla", "Honda"};
+
+foreach(string car in carTypes)
+{
+    Console.WriteLine($"Current Car is: {car}");
+}
+```
+
+## The while and do/while Looping Constructs
+
+```csharp
+string userIsDone = "";
+
+while (userIsDone != "Yes")
+{
+    Console.WriteLine("Please yes to cancel while loop (Yes/No)");
+    userIsDone = Console.ReadLine();
+}
+```
+</p>
+</details>
+
+<details>
+<summary>
+
+## 10. The if/else and switch statement
+</summary>
+<p>
+
+- ## Basic if/else statement
+Basic Syntax:
+
+```csharp
+if (condition) //true
+{
+
+}
+else //false
+{
+
+}
+```
+## Equality and Relational Operators
+
+| C# Equality/Relational Operator | Example Usage | Meaning of Life |
+| -- |-- | -- |
+| == | if (age == 30) | Returns true only if each expression is the same |
+| != | if (age != 30) | Returns true only if each expression is different |
+| <  | if (age < 30)  | Returns true if age is less than 30 |
+| >  | if (age > 30)  | Returns true if age is greater than 30 |
+| <= | if (age <= 30) | Returns true if age is less or equal to 30. |
+| >= | if (age >= 30) | Returns true if age is greater or equal to 30. |
+
+- ## if/else with Pattern Matching (7.0)
+
+- ## Conditional Operator (7.2)
+
+Syntax: condition ? first_expression : second_expression;
+
+Example:
+```csharp
+int age = 30;
+
+```
+**Notes:** 
+- Both types of first and second expression must be the same.
+- The conditional operator can be used only in assigment statements.
+- The conditional operator can be used to return a reference to the result of the condition:
+
+Example:
+```csharp
+var smallArray = new int[] {1,2,3,4,5};
+var largeArray = new int[] {10,20,30,40,50};
+
+int index = 7;
+ref int refValue = ref ((index<5) ? ref smallArray[index] : ref largeArray[index-t]);
+```
+
+- ## Logical Operators
+
+| Operator | Example | Meaning in Life |
+| -- | -- | -- |
+| && | if (age == 30 && name == "Fred) | AND operator. Returns true if all expressions are true | 
+| \|\| | if (age == 30 \|\| name == "Fred") | OR operator. Returns true if one of the expression is true |
+| ! | if (!myBool) | NOT operator. Return true if false, or false if true.
+
+- ## The switch Statement
+
+Example - 1:
+
+```csharp
+
+Console.WriteLine("1 for C#, 2 for VB.NET");
+var input = Console.ReadLine();
+
+var bInt = int.TryParse(input, out rInt);
+
+if (bInt)
+{
+    switch (rInt)
+    {
+        case 1:
+            Console.WriteLine($"C# has been selected");
+            break;
+        case 2:
+            Console.WriteLine($"VB.NET has been selected");
+            break;
+        default:
+            Console.WriteLine($"Nothing familiar has been selected");
+            break;
+    }
+}
+else
+    Console.WriteLine($"Unable to parse value: {input}");
+
+```
+
+Example 2:
+```csharp
+Console.Write("Enter your favorite day of the week");
+DayOfWeek favDay;
+
+try
+{
+    favDay = (DayOfWeek) Enum.Parse(typeof(DayOfWeek), Console.ReadLine());
+    switch (favDay)
+    {
+        case DayOfWeek.Sunday:
+            Console.WriteLine("Sunday");
+            break;
+        case DayOfWeek.Monday:
+            Console.WriteLine("Monday");
+            break;
+        case DayOfWeek.Tuesday:
+            Console.WriteLine("Tuesday");
+            break;
+        case DayOfWeek.Wednesday:
+            Console.WriteLine("Wednesday");
+            break;
+        case DayOfWeek.Thursday:
+            Console.WriteLine("Thursday");
+            break;
+        case DayOfWeek.Friday:
+            Console.WriteLine("Friday");
+            break;
+        case DayOfWeek.Saturday:
+            Console.WriteLine("Saturday");
+    }
+}
+catch (Exception ex)
+{
+    Console.WriteLine("Bad input");
+}
+```
+
+- ## Switch Statement Pattern Matching (7.0)
+
 </p>
 </details>
