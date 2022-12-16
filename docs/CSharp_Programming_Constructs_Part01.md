@@ -1,4 +1,4 @@
-# Core C# Programming Constructs
+# Core C# Programming Constructs - Part 01
 Table of Contents:
 1. The anatomy of a simple C# program
 2. System Data Types and corresponding C# Keywords
@@ -13,7 +13,7 @@ Table of Contents:
    - foreach/in loop
    - while loop
    - do/while loop
-10. The if/else & switch statement
+10. The if/else and switch statement
 
 <details>
 <summary>
@@ -606,5 +606,135 @@ catch (Exception ex)
 
 - ## Switch Statement Pattern Matching (7.0)
 
+Example - 1:
+```csharp
+Console.WriteLine("1 [Integer(5)], 2 [String(\"Hi\")], 3 [Decimal(2.5)]");
+Console.WriteLine("Please choose an option");
+string userChoice = Console.ReadLine();
+object choice ;
+
+switch (userChoice)
+{
+    case "1":
+        choice = 5;
+        break;
+    case "2"
+        choice = "Hi";
+        break;
+    case "3":
+        choice = 2.5;
+        break;
+    default:
+        choice = 5;
+        break;
+}
+
+switch (choice)
+{
+    case int i:
+        Console.WriteLine("Integer");
+        break;
+    case string s:
+        Console.WriteLine("String");
+        break;
+    case decimal d:
+        Console.WriteLine("Decimal");
+        break;
+    default:
+        Console.WriteLine("Something else");
+        break;
+}
+```
+
+Example - 2:
+```csharp
+Console.WriteLine("1 for C#, 2 for VB");
+Console.WriteLine("Please pick your langauge preference");
+object langChoice = Console.ReadLine();
+var choice = int.TryParse(langChoice.ToString(), out outLangChoice) ? outLangChoice: langChoice;
+
+switch (choice)
+{
+    case int i when i == 1:
+        Console.WriteLine($"C# has been selected");
+        break;
+    case int i when i = 2:
+        Console.WriteLine($"VB has been selected");
+    case string s when s.Equals("C#", StringComparison.OrdinalIgnoreCase);
+        Console.WriteLine($"C# - 2 has been selected");
+        break;
+    default:
+        Console.WriteLine("Unknown selection");
+        break;
+}
+```
+- ## 3 Switch Expression (8.0)
+
+New in C#8 are switch expressions, allowing the assignment of a variable in concise statement.
+
+Example - 1:
+```csharp
+switch (colorBand)
+{
+    case "Red":
+        return "FF0000";
+    case "Orange":
+        return "FF7F00";
+    default:
+        return "FFFFFF";
+}
+```
+
+This switch statement can be simplified with the following code block;
+```csharp
+var x = return switch (colorBand)
+{
+    "Red" => "FF0000",
+    "Orange" => "FF7F00",
+    _ => "FFFFFF"
+};
+
+```
+Example - 2:
+```csharp
+Console.WriteLine($"Please enter weekday literal");
+Console.WriteLine($"Day is : {GetDayEnum(Console.ReadLine())}");
+
+static string GetDayEnum(string currentDay)
+{
+    bool bdayOfWeek = Enum.TryParse(typeof(DayOfWeek), currentDay, true, out object rDayOfWeek);
+
+    if (bdayOfWeek)
+    {
+        return (DayOfWeek) rDayOfWeek switch
+        {
+            DayOfWeek.Monday => "Monday",
+            DayOfWeek.Tuesday => "Tuesday",
+            DayOfWeek.Wednesday => "Wednesday",
+            DayOfWeek.Thursday => "Thursday",
+            DayOfWeek.Friday => "Friday",
+            DayOfWeek.Saturday => "Saturday",
+            DayOfWeek.Sunday => "Sunday"
+        };
+    }
+    else
+        return "";
+}
+```
+Example - 3 (Complex)
+```csharp
+static string RockPaperScissors(string first, string second)
+{
+    return (first, second) switch {
+        ("rock", "paper") => "Paper wins",
+        ("rock", "scissors") => "Rock wins",
+        ("paper", "scissors") => "Scissors wins",
+        ("paper", "rock") => "Paper wins",
+        ("scissors", "rock") => "Rock wins",
+        ("scissors", "paper") => "Scissors wins"
+        (_, _) => "Tie"
+    };
+}
+```
 </p>
 </details>
