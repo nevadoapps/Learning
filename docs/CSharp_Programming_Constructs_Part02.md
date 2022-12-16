@@ -7,6 +7,9 @@ Table of Contents:
 5. Jagged Arrays
 6. The System.Array Base Class
 7. Methods
+8. Expression-Bodied Members
+9. Static Local Functions
+10. Method Parameter Modifiers
 
 <details>
 <summary>
@@ -216,5 +219,92 @@ for (int i = 0; i < strArray.Length; i++)
 ## 7. Methods
 </summary>
 <p>
+Methods are defined by an access modifier, return type (or void for no return type), and may or may not take parameters. A method that returns a value to the caller is commonly referred to as a function, while methods that do not return a value are commonly returned to as methods.
+
+Example:
+```csharp
+class Program 
+{
+    static void Main(string[] args)
+    {
+
+    }
+
+    //Function - Method
+    static int AddTwoNumbers(int a, int b)
+    {
+        return a+b;
+    }
+
+    static void WriteToConsole(string message)
+    { 
+        Console.WriteLine($"{Message}");
+    }
+}
+```
+</p>
+</details>
+
+<details>
+<summary>
+
+## 8. Expression-Bodied Members
+</summary>
+<p>
+C# 6 introduced expression-bodied members that shorten the syntax for single-line methods.
+
+Example:
+```csharp
+static int AddTwoNumbers(int a, int b) => a+b;
+```
+</p>
+</details>
+
+<details>
+<summary>
+
+## 9. Static Local Functions (8.0)
+</summary>
+<p>
+Local functions is the ability to create method within method, referred to officially as local functions. A local function is a function declared inside another function.
+
+Example:
+```csharp
+var result = AddTwoNumbers(5, 10);
+Console.WriteLine($"Result: {result}");
+
+static int? AddTwoNumbers(object a, object b)
+{
+    if (IsInteger(a) && IsInteger(b))
+        return (int)a + (int)b;
+    else
+        return null;
+
+    static bool IsInteger(object a)
+    {
+        if (a.GetType().ToString() == "System.Int32")
+            return true;
+        else
+            return false;
+    }
+}
+```
+</p>
+</details>
+
+<details>
+<summary>
+
+## 10. Method Parameter Modifiers
+</summary>
+<p>
+
+| Parameter Modifier | Meaning in life |
+| -- | -- |
+| (None) | If a value type parameter is not marked with a modifier, it is assummed to be passed by value, meaning the called method receives a copy of the original data. Reference types without a modifier are passed in by reference. | 
+| out | Output parameters must be assigned by the method being called and, therefore are passed by reference. If the called method fails to assign output parameters, you are issued a compiler error.|
+| ref | The value is initially assigned by the caller and may be optionally modified by the called method (as the data is also passed by reference). No compiler error is generated if the called method failes to assign a ref parameter.|
+| in | New in 7.2, the in modifier indicates that a ref parameter is read-only by the called method.|
+| params | This parameter modifier allows you to send in a variable number of arguments as a single logical parameter. A method can have only a single params modifier and it must be the final parameter of the method. In reality, you might not need to use the params modifier all to often; however, be aware that numerous methods within the base class libraries do make use of this C# language feature.|
 </p>
 </details>
