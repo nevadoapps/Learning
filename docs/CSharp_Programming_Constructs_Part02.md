@@ -614,5 +614,6 @@ struct Point
 ## 13. Understanding the Value Types and Reference Types
 </summary>
 <p>
+
 </p>
 </details>
