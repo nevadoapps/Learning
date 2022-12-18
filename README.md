@@ -1,7 +1,44 @@
 # Welcome to Learning Platform
 
 Here is the list of topics being covered within the repository.
-1. [Github Documentation Syntax](docs/Github_Documentation_Syntax.md)
-2. [Core C# Programming Constructs - Part 01](docs/CSharp_Programming_Constructs_Part01.md)
-3. [Core C# Programming Constructs - Part 02](docs/CSharp_Programming_Constructs_Part02.md)
-4. [Object Oriented Programming with C#](docs/CSharp_Object_Oriented_Programming.md)
+<details>
+<summary>
+
+## Github Documentation
+</summary>
+<p>
+
+## 1. [Github Documentation Syntax](docs/Github/Github_Documentation_Syntax.md)
+</p>
+</details>
+
+<details>
+<summary>
+
+## C# Fundamentals
+</summary>
+<p>
+
+- ## [Core C# Programming Constructs - Part 01](docs/CSharpFundamentals/CSharp_Programming_Constructs_Part01.md)
+- ## [Core C# Programming Constructs - Part 02](docs/CSharpFundamentals/CSharp_Programming_Constructs_Part02.md)
+- ## [Object Oriented Programming with C#](docs/CSharpFundamentals/CSharp_Object_Oriented_Programming.md)
+</p>
+</details>
+
+<details>
+<summary>
+ASP.Net Fundamentals
+</summary>
+<p>
+</p>
+</details>
+
+<details>
+<summary>
+
+## Nuget Packages
+</summary>
+<p>
+
+</p>
+</details>
