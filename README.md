@@ -32,6 +32,8 @@ Here is the list of topics being covered within the repository.
 ## ASP.Net Fundamentals
 </summary>
 <p>
+
+- [Testing ASP.Net Core Application](docs/ASPNetCore/ASPNetCore_Testing.md)
 </p>
 </details>
 
