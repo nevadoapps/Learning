@@ -22,6 +22,14 @@ Table of Contents:
 12. Understanding the Structure (Struct) type (aka Value Type)
 13. Understanding the Value Types and Reference Types
 14. Understanding C# Nullable Types
+    - Nullable Value Types
+    - Nullable Reference Types
+    - Opting in for Nullable Reference Types
+    - Values for Nullable in Project Files
+    - The Null-Coalescing Operator
+    - The Null-Coalescing Assigment Operator (8.0)
+    - The Conditional Operator
+15. Tuples (Not documented yet!)    
 
 <details>
 <summary>
@@ -789,11 +797,11 @@ char? nullableChar = 'a';
 int[]? arrayOfNullableInts = new Int?[10];
 ```
 
-- ## Nullable Value Types
+- ## Nullable Reference Types
 
 A significant change in C# 8 is the support for nullable reference types. In fact, the change is so significant that .Net FW could not be updated to support this new feature. Hence, the decisions to only support C# 8 in .Net Core 3.0 or later and the decision that support for nullable reference types is an opt in. By default, when you create a new project in .NetCore 3/3.1, reference types work the same way that they did on C# 7.
 
-    - Opting in for Nullable Reference Types
+- ## Opting in for Nullable Reference Types
 Support for nullable reference types is controlled by setting a Nullable Context. This can be as big as an entire project (by updating the project file) or as small as a few lines (by using compiler directives). 
 - Nullable Annotation Context: This enables/disables the nullable annotation (?) for nullable reference types.
 - Nullable Warning Context: This enables/disables the compiler warnings for nullable reference types.
@@ -809,7 +817,7 @@ Example:
         <Nullable>enable</Nullable>
     </PropertyGroup>
 ```
-## Values for Nullable in Project Files
+- ## Values for Nullable in Project Files
 | Value | Meaning in Life |
 | -- | -- |
 | Enable | Nullable Annotations are enabled an Nullable Warnings are enabled.|
@@ -817,7 +825,7 @@ Example:
 | Annotations | Nullable Annotations are enabled and Nullable Warnings are disabled. | 
 | Disable | Nullable Annotations are disabled and Nullable Warnings are disabled. |
 
-## The Null-Coalescing Operator
+- ## The Null-Coalescing Operator
 
 The null-coalescing operator ?? returns the value of its left-hand operand if it isn't null; otherwise, it evaluates the right-hand operand and returns its result. The ?? operator doesn't evaluate its right-hand operand if the left-hand operand evaluates to non-null.
 
@@ -838,7 +846,7 @@ Console.WriteLine(a);  // output: 0
 - The left-hand operand of the **??** operator must be a variable, a **operator**, or an **indexer** element.
 - The type of the left-hand operand of the **??** and **??=** operators can't be a non-nullable value type.
 
-## The Null-Coalescing Assigment Operator (8.0)
+- ## The Null-Coalescing Assigment Operator (8.0)
 
 Building on the null-coalescing operator, C# 8 introduced the null-coalescing operator **??=**. This operator assigns the left hand-side to the right-hand side only if the left-hand side is null.
 
@@ -850,7 +858,7 @@ nullableInt ??=14;
 Console.WriteLine($"Output:{nullableInt}");
 ```
 
-## The Conditonal Operator
+- ## The Conditional Operator
 A null-conditional operator applies a member access, ?., or element access, ?[], operation to its operand only if that operand evaluates to non-null; otherwise, it returns null.
 
 - If a evaluates to null, the result of a?.x or a?[x] is null.
