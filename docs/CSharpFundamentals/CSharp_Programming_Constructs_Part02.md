@@ -21,6 +21,7 @@ Table of Contents:
 11. Understanding the enum Type
 12. Understanding the Structure (Struct) type (aka Value Type)
 13. Understanding the Value Types and Reference Types
+14. Understanding C# Nullable Types
 
 <details>
 <summary>
@@ -615,5 +616,267 @@ struct Point
 </summary>
 <p>
 
+Unlike, arrays, string or enumerations, C# structures do not have an identically named representation in the .Net Core library but are implicitly derived from System.ValueType. The role of System.ValueType is to ensure that the derived type (e.g., any structure) is allocated on the **stack**, rather than the garbage-collected **heap**.
+
+Simply put, data collected on the stack can be created and destroyed quickly, as its lifetime is determined by the defining scope. The base class of ValueType is System.Object.
+
+**Heap-allocated** data, on the other hand, is monitoerd by the .Net Core Garbage collector and has a lifetime that is determined by a large number of factors.
+
+- ## Value Types, Reference Types, and the Assignment Operator
+    - ## Value Types
+When you assign one value type to another, a member-by-member copy of the field data is achieved.
+
+A variable of a value type contains an instance of the type. This differs from a variable of a reference type, which contains a reference to an instance of the type. By default, on **assignment**, passing an argument to a method, and returning a method result, variable values are copied. The case of value-type variables, the corresponding type instances are copied.
+
+Example:
+```csharp
+using System;
+
+public struct MutablePoint
+{
+    public int X;
+    public int Y;
+
+    public MutablePoint(int x, int y) => (X, Y) = (x, y);
+
+    public override string ToString() => $"({X}, {Y})";
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        var p1 = new MutablePoint(1, 2);
+        var p2 = p1;
+        p2.Y = 200;
+        Console.WriteLine($"{nameof(p1)} after {nameof(p2)} is modified: {p1}");
+        Console.WriteLine($"{nameof(p2)}: {p2}");
+
+        MutateAndDisplay(p2);
+        Console.WriteLine($"{nameof(p2)} after passing to a method: {p2}");
+    }
+
+    private static void MutateAndDisplay(MutablePoint p)
+    {
+        p.X = 100;
+        Console.WriteLine($"Point mutated in a method: {p}");
+    }
+}
+// Expected output:
+// p1 after p2 is modified: (1, 2)
+// p2: (1, 200)
+// Point mutated in a method: (100, 200)
+// p2 after passing to a method: (1, 200)
+```
+
+If a value type contains a data member of a reference type, only the reference to the instance of the reference type is copied when a value-type instance is copied. Both the copy and original value-type instance have access to the same reference-type instance. 
+
+Example:
+```csharp
+using System;
+using System.Collections.Generic;
+
+public struct TaggedInteger
+{
+    public int Number;
+    private List<string> tags;
+
+    public TaggedInteger(int n)
+    {
+        Number = n;
+        tags = new List<string>();
+    }
+
+    public void AddTag(string tag) => tags.Add(tag);
+
+    public override string ToString() => $"{Number} [{string.Join(", ", tags)}]";
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        var n1 = new TaggedInteger(0);
+        n1.AddTag("A");
+        Console.WriteLine(n1);  // output: 0 [A]
+
+        var n2 = n1;
+        n2.Number = 7;
+        n2.AddTag("B");
+
+        Console.WriteLine(n1);  // output: 0 [A, B]
+        Console.WriteLine(n2);  // output: 7 [A, B]
+    }
+}
+```
+
+- ## Passing Reference Types by Value
+Example:
+```csharp
+class Person
+{
+    public string personName;
+    public int personAge;
+
+    public Person(string name, int age)
+    {
+        personAge = age;
+        personName = name;
+    }
+
+    public Person() { }
+
+    public string Display()
+    {
+       return $"Name: {personName}, Age: {personAge}";
+    }
+}
+
+public class Program
+{
+    static void SendAPersonByValue(Person p, int age)
+    {
+        p.personAge = age;
+        //Will the caller see the reassigment?
+        p = new Person("Nikki", age + 1);
+    }
+
+    static void Main(string[] args)
+    {
+        //Passing ref-types by value
+        Console.WriteLine("**** Passing person object by value ****");
+        Person fred = new Person("Fred", 12);
+        Console.WriteLine($"\nBefore by value call, Fred - Person is:{fred.Display()}");
+
+        SendAPersonByValue(fred, 99);
+        Console.WriteLine($"\nAfter by value call, Fred - Person is:{fred.Display()}");
+
+        var jane = fred;
+        Console.WriteLine("Fred object is copied to Jane");
+        SendAPersonByValue(jane, 101);
+        Console.WriteLine($"\nAfter by value call, Jane - Person is:{fred.Display()}");
+    }
+}
+```
+- ## Value Types and Reference Types Comparison
+
+| Intriguing Question | Value Type | Reference Type |
+| -- | -- | -- |
+| Where are objects are allocated? | Allocated on the stack | Allocated on the managed heap |
+| How is a variable represented? | Value type variables are local copies. | Reference type variables are pointing to the memory occupied by the allocated instance. | 
+| What is the base type? | Implicitly extends, System.ValueType | Can derive from any other type (except System.ValueType), as long as that type is not "sealed". |
+| Can this type function as a base to other types? | No, Value types are always sealed and cannot be inherited from. | Yes, If the type is not sealed, it may function as a base to other types. |
+| What is the default parameter-passing behavior? | Variables are passed by value. | For reference types, the reference is copied by value. |
+| Can this type override System.Object.Finalize()? | No | Yes, indirectly. |
+| Can I define constructors for this type? | Yes, but the default constructor is reserved. | But of course.! |
+| When do variables of this type die? | When they fall out of the defining scope. | When the object is garbage collected. |
+
+- ## 14. Understanding C# Nullable Types
+
+- ## Nullable Value Types
+As you know, C# data types have a fixed range and are represented as a type in the System namespace. For example, the System.Boolean data type can be assigned a value from the set {true, false}. Value types can never be assigned the value of null, as that is used to establish an empty object reference.
+
+C# supports the concept of **nullable data types**. Simply put, a nullable type can represent all the values of its underlying type, plus the value null. Thus, if you declare a nullable bool, it could be assigned a value from the set {true, false, null}.
+
+In C#, the **?** suffix notation is a shorthand for creating an instance of the generic System.Nullable<T> structure type.
+
+Example:
+```csharp
+int? nullableInt = 10;
+double? nullableDouble = 3.14;
+bool? nullableBool = null;
+char? nullableChar = 'a';
+int[]? arrayOfNullableInts = new Int?[10];
+```
+
+- ## Nullable Value Types
+
+A significant change in C# 8 is the support for nullable reference types. In fact, the change is so significant that .Net FW could not be updated to support this new feature. Hence, the decisions to only support C# 8 in .Net Core 3.0 or later and the decision that support for nullable reference types is an opt in. By default, when you create a new project in .NetCore 3/3.1, reference types work the same way that they did on C# 7.
+
+    - Opting in for Nullable Reference Types
+Support for nullable reference types is controlled by setting a Nullable Context. This can be as big as an entire project (by updating the project file) or as small as a few lines (by using compiler directives). 
+- Nullable Annotation Context: This enables/disables the nullable annotation (?) for nullable reference types.
+- Nullable Warning Context: This enables/disables the compiler warnings for nullable reference types.
+
+Update the project file to support nullabe reference types by adding the <Nullable> node.
+
+Example:
+
+```xml
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+```
+## Values for Nullable in Project Files
+| Value | Meaning in Life |
+| -- | -- |
+| Enable | Nullable Annotations are enabled an Nullable Warnings are enabled.|
+| Warnings | Nullable Annotations are disabled and Nullable Warnings are enabled. |
+| Annotations | Nullable Annotations are enabled and Nullable Warnings are disabled. | 
+| Disable | Nullable Annotations are disabled and Nullable Warnings are disabled. |
+
+## The Null-Coalescing Operator
+
+The null-coalescing operator ?? returns the value of its left-hand operand if it isn't null; otherwise, it evaluates the right-hand operand and returns its result. The ?? operator doesn't evaluate its right-hand operand if the left-hand operand evaluates to non-null.
+
+Example:
+```csharp
+List<int> numbers = null;
+int? a = null;
+
+(numbers ??= new List<int>()).Add(5);
+Console.WriteLine(string.Join(" ", numbers));  // output: 5
+
+numbers.Add(a ??= 0);
+Console.WriteLine(string.Join(" ", numbers));  // output: 5 0
+Console.WriteLine(a);  // output: 0
+```
+
+**Notes:** 
+- The left-hand operand of the **??** operator must be a variable, a **operator**, or an **indexer** element.
+- The type of the left-hand operand of the **??** and **??=** operators can't be a non-nullable value type.
+
+## The Null-Coalescing Assigment Operator (8.0)
+
+Building on the null-coalescing operator, C# 8 introduced the null-coalescing operator **??=**. This operator assigns the left hand-side to the right-hand side only if the left-hand side is null.
+
+Example:
+```csharp
+int? nullableInt = null;
+nullableInt ??=12;
+nullableInt ??=14;
+Console.WriteLine($"Output:{nullableInt}");
+```
+
+## The Conditonal Operator
+A null-conditional operator applies a member access, ?., or element access, ?[], operation to its operand only if that operand evaluates to non-null; otherwise, it returns null.
+
+- If a evaluates to null, the result of a?.x or a?[x] is null.
+- If a evaluates to non-null, the result of a?.x or a?[x] is the same as the result of a.x or a[x], respectively.
+
+Example:
+```csharp
+double SumNumbers(List<double[]> setsOfNumbers, int indexOfSetToSum)
+{
+    return setsOfNumbers?[indexOfSetToSum]?.Sum() ?? double.NaN;
+}
+
+var sum1 = SumNumbers(null, 0);
+Console.WriteLine(sum1);  // output: NaN
+
+var numberSets = new List<double[]>
+{
+    new[] { 1.0, 2.0, 3.0 },
+    null
+};
+
+var sum2 = SumNumbers(numberSets, 0);
+Console.WriteLine(sum2);  // output: 6
+
+var sum3 = SumNumbers(numberSets, 1);
+Console.WriteLine(sum3);  // output: NaN
+```
 </p>
 </details>
