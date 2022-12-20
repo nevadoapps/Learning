@@ -1,4 +1,4 @@
-# Object Oriented Programming with C#
+# Object Oriented Programming with C# - Part 01
 Table of contents: 
 1. Understanding Encapsulation
    - Introducing the C# class type
@@ -11,8 +11,8 @@ Table of contents:
      - Defining Pillars of Object Oriented Programming
      - C# Access Modifier (7.2)
      - The First Pillar: C#'s Encapsulation Services
-<details>
-<summary>
+     - Read-Only and Write-Only Properties
+     - Mixing Private and Public Get/Set Methods on Properties
 
 ## Understanding Encapsulation
 
@@ -358,7 +358,7 @@ public class Person
     }
 }
 ```
-- ## Mixing Private and Public Get/Set Methods on Properties:
+- ## Mixing Private and Public Get/Set Methods on Properties
 Example:
 ```csharp
 public string SocialSecurityNumber
@@ -367,7 +367,3 @@ public string SocialSecurityNumber
     private set => _empSSN = value;
 }
 ```
-</summary>
-<p>
-</p>
-</details>
