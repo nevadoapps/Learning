@@ -13,6 +13,8 @@ Table of contents:
      - The First Pillar: C#'s Encapsulation Services
      - Read-Only and Write-Only Properties
      - Mixing Private and Public Get/Set Methods on Properties
+2. Understanding Inheritance and Polymorphism
+   - The Basic Mechanics of Inheritance     
 
 ## Understanding Encapsulation
 
@@ -367,3 +369,82 @@ public string SocialSecurityNumber
     private set => _empSSN = value;
 }
 ```
+## 2. Understanding Inheritance and Polymorphism
+   - ## The Basic Mechanics of Inheritance
+Code reuse comes in two flavors: 
+- Inheritance (the is-a relationship): It allows you to define a child cass that reuses (inherits), extends, or modifies the behavior of a **parent class**. The class whose members are inherited is called **the base class**. The class that inherits the members of the base class is called **the derived class**.
+
+**Notes:** 
+
+- Not all members of a base class are inherited by derived (child) classes. The following members are not inherited:
+    - Static constructors, which initialize the static data of a class.
+    - Instance constructors, which you call to create a new instance of the class. Each class must define its own constructurs.
+    - Finalizers, which are called by the runtime's garbage collector to destroy instances of a class.
+- While all other members of a base class inherited by derived classes, whether they are visible of not depends on their accessibility. A member's accessibility affects its visibility for derived classes as follows:
+    - Private members are visible only in derived classes that are nested in their base class. Otherwise, they are not visible in derived classes. In the following example, **A.B** is nested class that derives from **A**, and **C** derives from A. The private **A._value** field is visible for in A.B. However, if you remove the comments from the **C.GetValue** method an attempt to compile the example, it produces compiler error, CS0122: "A._value is inacsessible due to its protection level."
+
+    Example:
+
+    ```csharp
+    public class A
+    {
+        private int _value = 10;
+
+        public class B : A
+        {
+            public int GetValue()
+            {
+                return _value;
+            }
+        }
+    }
+
+    public class C : A
+    {
+        //    public int GetValue()
+        //    {
+        //        return _value;
+        //    }
+    }
+
+    public class AccessExample
+    {
+        public static void Main(string[] args)
+        {
+            var b = new A.B();
+            Console.WriteLine(b.GetValue());
+        }
+    }
+    // The example displays the following output:
+    //       10
+    ```
+
+    - **Protected** members are visible only in derived classes.
+    - **Internal** members are visible only in derived classes that are located in the same assembly as the base class. They are not visible in derived classes in a different assembly from the base class.
+    - **Public** members are visible in derived classes and are part of the derived class' public interface. Public inherited members can be called just as if they are defined in the derived class. In the following example, class **A** defines a method named **Method1**, and a class **B** inherits from class **A**. 
+
+    Example:
+    ```csharp
+    public class A
+    {
+        public void Method1()
+        {
+            // Method implementation.
+        }
+    }
+
+    public class B : A
+    { }
+
+    public class Example
+    {
+        public static void Main()
+        {
+            B b = new ();
+            b.Method1();
+        }
+    }
+    ```
+
+
+- Containment/delegation model (the has-a relationship)
