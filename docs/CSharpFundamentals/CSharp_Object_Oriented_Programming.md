@@ -288,7 +288,9 @@ public class Program
         }
 
         private string bookName;
-        public string BookName => bookName;
+
+        //Expression-Bodied Members (7.0)
+        public string BookName { get => bookName; }
 
         public Book() { }
 
@@ -312,6 +314,57 @@ public class Program
         book.SetBookPages(1000);
         Console.WriteLine(book.ToString());
     }
+}
+```
+- ## Read-Only and Write-Only Properties
+    - **Read-Only Properties:**
+
+Example:
+```csharp
+public class Person
+{
+    private string _empSSN;
+
+    public string SocialSecurityNumber
+    {
+        get { return _empSSN; }
+    }
+
+    //or
+    public string SocialSecurityNumber => _empSSN;
+
+    //or    
+    public string SocialSecurityNumber { get => _empSSN; }
+
+    //or
+    public string SocialSecurityNumber { get; }
+}
+```
+
+   - **Write-Only Properties:**
+
+Example:
+```csharp
+public class Person
+{
+    public string PhoneNumber { set; }
+
+    //or 
+    private string _phoneNumer;
+    public string PhoneNumber { 
+        set {
+            _phoneNumber = value;
+        }
+    }
+}
+```
+- ## Mixing Private and Public Get/Set Methods on Properties:
+Example:
+```csharp
+public string SocialSecurityNumber
+{
+    get => _empSSN;
+    private set => _empSSN = value;
 }
 ```
 </summary>
