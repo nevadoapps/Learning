@@ -372,9 +372,9 @@ public string SocialSecurityNumber
 ## 2. Understanding Inheritance and Polymorphism
    - ## The Basic Mechanics of Inheritance
 Code reuse comes in two flavors: 
-- Inheritance (the is-a relationship): It allows you to define a child cass that reuses (inherits), extends, or modifies the behavior of a **parent class**. The class whose members are inherited is called **the base class**. The class that inherits the members of the base class is called **the derived class**.
+- **Inheritance (the is-a relationship):** It allows you to define a child cass that reuses (inherits), extends, or modifies the behavior of a **parent class**. The class whose members are inherited is called **the base class**. The class that inherits the members of the base class is called **the derived class**.
 
-**Notes:** 
+    **Notes:** 
 
 - Not all members of a base class are inherited by derived (child) classes. The following members are not inherited:
     - Static constructors, which initialize the static data of a class.
@@ -490,6 +490,45 @@ Code reuse comes in two flavors:
 
         }
 
+        //SocialNumber in Employee Base Class is marked as protected, can only be accessed in derived class.
+        public void ChangeSocialNumber(string socialnumber)
+        {
+            base.SocialNumber = socialnumber;
+        }
+
+        //FullName in Employee Base Class is marked as internal, can be accessed from derived class
+        public void ChangeFullName(string fullname)
+        { 
+            base.FullName = fullname; 
+        }
+
+        public bool HasBonus { get; set; }
+    }
+    ```
+    - **The Sealed Class**
+    
+    A sealed class cannot be extended by other classes. This technique is most often used when you are designing a utility class. However, when building class hieararchies, you might find that a certain branch in the inheritance chain should be **"capped off"**, as it makes no sense to further extend linage.
+
+    Example: 
+    ```csharp
+
+    //Error: CS0509: Executive cannot derive from sealed type Manager.
+    public class Executive: Manager
+    {
+
+    }
+
+    internal sealed class Manager: Employee
+    {
+        public Manager() : base(string.Empty, string.Empty, default)
+        { }
+
+        public Manager(string socialnumber, string fullname, bool isactive): 
+            base(socialnumber, fullname, isactive)
+        {
+
+        }
+
         //SocialNumber is Employee Base Class is marked as protected, can only be accessed in derived class.
         public void ChangeSocialNumber(string socialnumber)
         {
@@ -506,5 +545,136 @@ Code reuse comes in two flavors:
     }
     ```
 
+- **Containment/delegation model (the has-a relationship)**
 
-- Containment/delegation model (the has-a relationship)
+    Example - 01:
+    ```csharp
+    class BenefitPackage
+    {
+        public double ComputePayDeduction()
+        {
+            return 125.0;
+        }
+    }
+
+    class Employee 
+    {
+        protected BenetifPackage EmpBenefits = new BenefitPackage();
+
+        public double GetBenefitsCost() => EmpBenefits.ComputePayDeduction();
+
+        public BenefitPackage Benefits {
+            get { return EmpBenefits; }
+            set { EmpBenefits = value; }
+        }
+    }
+    ```
+
+    Example - 02:
+    ```csharp
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+            var manager = new Manager("X12145665", "Seha Yetginer", true);
+
+            //FullName in Employee Base Class is marked as internal, can be accessed from derived class
+            Console.WriteLine($"Manager Full Name: {manager.FullName}");
+
+            //SocialNumber is Employee Base Class is marked as protected, can only be accessed in derived class.
+            //So, trying to access protected property from derived class of a base class, gives compiler error.
+            //Console.WriteLine($"Manager Social Number: {manager.SocialNumber}");
+
+            //IsActive in Employee Base Class is marked as public, can be accessed from everywhere.
+            Console.WriteLine($"Manager Is Active: {manager.IsActive}");
+
+            manager.AddBenefit("X", 100, 100);
+            manager.AddBenefit("Y", 200, 100);
+            Console.WriteLine($"Get Benefits:\n{manager.GetBenefits()}");
+        }
+    }
+    internal class Employee
+    {
+        protected string SocialNumber { get; set; }
+        internal string FullName { get; set; }
+        public bool IsActive { get; set; }
+
+        public Employee(string socialnumber, string fullname, bool isactive)
+        {
+            SocialNumber = socialnumber;
+            FullName = fullname;
+            IsActive = isactive;
+        }
+    }
+
+    internal sealed class BenefitsPackage
+    {
+        internal string? BenefitName { get; set; }
+        internal double? BenefitValue { get; set; }
+        public static double BenefitRatio { get; set; }
+
+        public static void SetBenefitRatio(double ratio)
+        {
+            BenefitRatio = ratio;
+        }
+
+        public BenefitsPackage (string? benefitName, double? benefitValue)
+        {
+            BenefitName = benefitName;
+            BenefitValue = benefitValue;
+        }
+
+        public override string ToString()
+        {
+            return $"Name: {this.BenefitName}, Value: {this.BenefitValue}\n";
+        }
+    }
+
+    internal class Manager: Employee
+    {
+        private List<BenefitsPackage> Benefits { get; set; } = new List<BenefitsPackage>();
+
+        public Manager() : base(string.Empty, string.Empty, default)
+        { 
+
+        }
+
+        public Manager(string socialnumber, string fullname, bool isactive): 
+            base(socialnumber, fullname, isactive)
+        {
+
+        }
+
+        public void AddBenefit(string benefitname, double benefitvalue, double benefitratio)
+        {
+            Benefits.Add(new BenefitsPackage(benefitname, benefitvalue));
+            BenefitsPackage.SetBenefitRatio(100);
+        }
+
+        public string GetBenefits()
+        {
+            string retVal = "";
+
+            foreach (var benefit in Benefits)
+            {
+                retVal += string.Join(",", benefit.ToString());
+            }
+
+            return retVal;
+        }
+
+        //SocialNumber is Employee Base Class is marked as protected, can only be accessed in derived class.
+        public void ChangeSocialNumber(string socialnumber)
+        {
+            base.SocialNumber = socialnumber;
+        }
+
+        //FullName in Employee Base Class is marked as internal, can be accessed from derived class
+        public void ChangeFullName(string fullname)
+        { 
+            base.FullName = fullname; 
+        }
+
+        public bool HasBonus { get; set; }
+    }
+    ```
