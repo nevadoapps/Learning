@@ -14,7 +14,11 @@ Table of contents:
      - Read-Only and Write-Only Properties
      - Mixing Private and Public Get/Set Methods on Properties
 2. Understanding Inheritance and Polymorphism
-   - The Basic Mechanics of Inheritance     
+   - The Basic Mechanics of Inheritance
+   - Inheritance (The is-a relationship)
+   - The Sealed Class
+   - Containment/delegation model (The has-a relationship)
+3. 
 
 ## Understanding Encapsulation
 
