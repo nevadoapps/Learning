@@ -446,5 +446,65 @@ Code reuse comes in two flavors:
     }
     ```
 
+    Example:
+    ```csharp
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+            var manager = new Manager("X12145665", "Seha Yetginer", true);
+
+            //FullName in Employee Base Class is marked as internal, can be accessed from derived class
+            Console.WriteLine($"Manager Full Name: {manager.FullName}");
+
+            //SocialNumber is Employee Base Class is marked as protected, can only be accessed in derived class.
+            //So, trying to access protected property from derived class of a base class, gives compiler error.
+            Console.WriteLine($"Manager Social Number: {manager.SocialNumber}");
+
+            //IsActive in Employee Base Class is marked as public, can be accessed from everywhere.
+            Console.WriteLine($"Manager Is Active: {manager.IsActive}");
+        }
+    }
+    internal class Employee
+    {
+        protected string SocialNumber { get; set; }
+        internal string FullName { get; set; }
+        public bool IsActive { get; set; }
+
+        public Employee(string socialnumber, string fullname, bool isactive)
+        {
+            SocialNumber = socialnumber;
+            FullName = fullname;
+            IsActive = isactive;
+        }
+    }
+
+    internal class Manager: Employee
+    {
+        public Manager() : base(string.Empty, string.Empty, default)
+        { }
+
+        public Manager(string socialnumber, string fullname, bool isactive): 
+            base(socialnumber, fullname, isactive)
+        {
+
+        }
+
+        //SocialNumber is Employee Base Class is marked as protected, can only be accessed in derived class.
+        public void ChangeSocialNumber(string socialnumber)
+        {
+            base.SocialNumber = socialnumber;
+        }
+
+        //FullName in Employee Base Class is marked as internal, can be accessed from derived class
+        public void ChangeFullName(string fullname)
+        { 
+            base.FullName = fullname; 
+        }
+
+        public bool HasBonus { get; set; }
+    }
+    ```
+
 
 - Containment/delegation model (the has-a relationship)
