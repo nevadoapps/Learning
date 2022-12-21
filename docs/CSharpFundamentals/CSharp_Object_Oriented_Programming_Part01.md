@@ -26,7 +26,11 @@ Table of contents:
    - Access base class virtual member from derived classes
 5. Fourth Pillar of OOP - Abstraction
 6. Understanding Base Class/Derived Class Casting Rules
-
+7. The C# as Keyword
+8. The C# is Keyword
+9. Cast Expression
+10. [Pattern Matching - Reading](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/patterns)
+    
 ## 1. Defining the Pillars of Object Oriented Programming
 C# is an object-oriented programming language. The four principles of object-oriented programming are:
 - Abstraction Modeling the relevant attributes and interactions of entities as classes to define an abstract representation of a system.
@@ -955,3 +959,127 @@ public class D : C
 ```
 
 ## 6. Understanding Base Class/Derived Class Casting Rules
+The ultimate base class in the system is System.Object. Therefore, everything "is-an" object and can be treated as such.
+
+For example, Managers, SalesPerson, and PtSalesPerson types all extend Employee, so you can store any of these objects in a valid base class reference.
+
+```csharp
+// A manager "is-a" System.Object, so we can
+object frank = new Manager();
+
+// A manager "is-a" Employee too.
+Employee moonUnit = new  Manager();
+
+// A PtSalesPerson "is-a" SalesPerson
+SalesPerson jill = new PtSalesPerson();
+
+// Passing object frank to GivePromotion which accepts Employee Base class
+// An Error occurred
+GivePromotion(frank);
+
+static void GivePromotion(Employee Emp) {}
+
+```
+## 7. The C# as Keyword
+The **as** operator explicitly converts the result of an expression to a given reference or nullable value type. If the conversion isn't possible, the **as** operator returns null. Unlike a **cast expression**, the as operator never throws an exception.
+
+The expressin of the form
+```csharp
+E as T
+```
+where E is an expression that returns a value and T is the name of a type parameter, produces the same result as
+```csharp
+E is T ? (T)(E) : (T)null
+```
+except that E is only evaluated one.
+- The **as** operator considers only reference, nullable, boxing, and unboxing conversions.
+- The **as** operator to perform a user-defined conversion.
+
+## 8. The C# is Keyword
+The **is** operator checks if the result of an expression is compatible with a given type. For information about the type-testing is operator, see the **is** operator section of the Type-testing and cast operators article. 
+
+The **is** operator can be useful in the following scenarios:
+
+- To chech the run-time type of expression:
+  
+  Example:
+  ```csharp
+    int i = 34;
+    object iBoxed = i;
+    int? jNullable = 42;
+    if (iBoxed is int a && jNullable is int b)
+    {
+        Console.WriteLine(a + b);  // output 76
+    }
+  ```
+- To check for **null**
+
+  Example:
+  ```csharp
+  if (input is null) { return; }
+  ```
+- Beginning with C# 9.0, you can use negation pattern to do a non-null check
+
+  Example:
+
+  ```csharp
+  if (result is not null)
+  {
+    Console.WriteLine(result.ToString());
+  }
+  ```
+  - Type Testing with the type of operator
+  Use the **typeof** operator to check if the run-time of the expression result exactly matches a given type. 
+
+  Example:
+  ```csharp
+    public class Animal { }
+
+    public class Giraffe : Animal { }
+
+    public static class TypeOfExample
+    {
+        public static void Main()
+        {
+            object b = new Giraffe();
+            Console.WriteLine(b is Animal);  // output: True
+            Console.WriteLine(b.GetType() == typeof(Animal));  // output: False
+
+            Console.WriteLine(b is Giraffe);  // output: True
+            Console.WriteLine(b.GetType() == typeof(Giraffe));  // output: True
+        }
+    }
+  ```
+
+**Notes: (Updated 7.0)**
+The **is** keyword can also assign the converted type to a variable if the cast works. This cleans up the preceding method by preventing the **"double-cast"** problem.
+
+Example:
+```csharp
+static void GivePromotion(Employee emp)
+{
+    if (emp is SalesPerson s)
+    {
+        Console.WriteLine($"{s.Name} made sale(s) {s.SalesNumber}");
+    }
+    else if (emp is Manager m)
+    {
+        Console.WriteLine($"{m.Name} has {m.StockOptions}.");
+    }
+}
+```
+
+## 9. Cast Expression
+A cast expression o the form **(T)E** performs an explicit conversion of the result of expression **E** to type **T**. If no explicit conversion exists from the type of **E** to type of **T**, a compile-time error occurs.
+
+Example:
+```csharp
+double x = 1234.7;
+int a = (int)x;
+Console.WriteLine(a);   // output: 1234
+
+IEnumerable<int> numbers = new int[] { 10, 20, 30 };
+IList<int> list = (IList<int>)numbers;
+Console.WriteLine(list.Count);  // output: 3
+Console.WriteLine(list[1]);  // output: 20
+```
