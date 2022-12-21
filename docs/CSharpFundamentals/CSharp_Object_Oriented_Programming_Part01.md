@@ -30,6 +30,7 @@ Table of contents:
 8. The C# is Keyword
 9. Cast Expression
 10. [Pattern Matching - Reading](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/patterns)
+11. The Super Parent Class: System.Object
     
 ## 1. Defining the Pillars of Object Oriented Programming
 C# is an object-oriented programming language. The four principles of object-oriented programming are:
@@ -1083,3 +1084,12 @@ IList<int> list = (IList<int>)numbers;
 Console.WriteLine(list.Count);  // output: 3
 Console.WriteLine(list[1]);  // output: 20
 ```
+## 11. The Super Parent Class: System.Object
+| Instance Method or Object Class | Meaning in Life |
+| -- | -- |
+| Equals() | By default, this method returns true only if the items being compared refer to the same item in memory. Thus, Equals() is used to compare object references, not the state of the object. Typically, this method is overridden to return true only if the object being compared have the same internal state values.Be aware that if you override Equals(), you should also override GetHashCode(), as these methods are used internally by HashTable types to retrieve subobjects from container.|
+| Finalize() | For the time being, you can understand this method is called to free any allocated resources before the object is destroyed.|
+| GetHashCode() | This method returns an int that identifies a specific object instance. |
+| ToString() | This method returns a string representation of this object, using <namespace>.<type_name> format. This method will often be overridden by a subclass to return a tokenized string of name/value pairs that represent the object's internal state, rather than its fully qualified name. |
+| GetType() | This method returns A Type object that fully describes the object you are currently referencing. |
+| MemberwiseClone() | This method exists to return a member-by-member copy of the current object.|
