@@ -23,6 +23,8 @@ Here is the list of topics being covered within the repository.
 - [Core C# Programming Constructs - Part 02](docs/CSharpFundamentals/CSharp_Programming_Constructs_Part02.md)
 - [Object Oriented Programming with C# - Part 01](docs/CSharpFundamentals/CSharp_Object_Oriented_Programming_Part01.md)
 - [Object Oriented Programming with C# - Part 02](docs/CSharpFundamentals/CSharp_Object_Oriented_Programming_Part02.md)
+
+x
 </p>
 </details>
 
