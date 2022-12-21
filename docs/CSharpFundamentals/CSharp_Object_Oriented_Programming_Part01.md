@@ -1,6 +1,7 @@
 # Object Oriented Programming with C# - Part 01
 Table of contents: 
-1. Understanding Encapsulation
+1. Defining the Pillars of Object-Oriented Programming
+2. First Pillar of OOP - Understanding Encapsulation
    - Introducing the C# class type
    - Understanding Constructors
      - The role of the Default Constructors
@@ -13,14 +14,27 @@ Table of contents:
      - The First Pillar: C#'s Encapsulation Services
      - Read-Only and Write-Only Properties
      - Mixing Private and Public Get/Set Methods on Properties
-2. Understanding Inheritance and Polymorphism
+3. Second Pillar of OOP - Understanding Inheritance
    - The Basic Mechanics of Inheritance
    - Inheritance (The is-a relationship)
    - The Sealed Class
    - Containment/delegation model (The has-a relationship)
-3. 
+4. Third Pillar of OOP - Understanding Polymorphism
+   - Virtual Members
+   - Hide base class members with new members
+   - Prevent derived classes from overriding virtual members
+   - Access base class virtual member from derived classes
+5. Fourth Pillar of OOP - Abstraction
+6. Understanding Base Class/Derived Class Casting Rules
 
-## Understanding Encapsulation
+## 1. Defining the Pillars of Object Oriented Programming
+C# is an object-oriented programming language. The four principles of object-oriented programming are:
+- Abstraction Modeling the relevant attributes and interactions of entities as classes to define an abstract representation of a system.
+- Encapsulation Hiding the internal state and functionality of an object and only allowing access through a public set of functions
+- Inheritance Ability to create a new abstractions based on existing abstractions.
+- Polymorphism Ability to implement inherited properties or methods in different ways across multiple abstractions.
+
+## 2. Understanding Encapsulation
 
 - ## Introducing the C# class type
 
@@ -242,14 +256,6 @@ public static class TimeUtilClass
     public static void PrintDate() => Console.WriteLine(dateTime.ToDay.ToShorDateStrig());
 }
 ```
-
-- ## Defining the Pillars of Object Oriented Programming
-C# is an object-oriented programming language. The four principles of object-oriented programming are:
-- Abstraction Modeling the relevant attributes and interactions of entities as classes to define an abstract representation of a system.
-- Encapsulation Hiding the internal state and functionality of an object and only allowing access through a public set of functions
-- Inheritance Ability to create a new abstractions based on existing abstractions.
-- Polymorphism Ability to implement inherited properties or methods in different ways across multiple abstractions.
-
 - ## C# Access Modifier (7.2)
 | C# Access Modifier | May Be Applied To | Meaning in Life |
 | -- | -- | -- |
@@ -373,7 +379,7 @@ public string SocialSecurityNumber
     private set => _empSSN = value;
 }
 ```
-## 2. Understanding Inheritance and Polymorphism
+## 3. Understanding Inheritance and Polymorphism
    - ## The Basic Mechanics of Inheritance
 Code reuse comes in two flavors: 
 - **Inheritance (the is-a relationship):** It allows you to define a child cass that reuses (inherits), extends, or modifies the behavior of a **parent class**. The class whose members are inherited is called **the base class**. The class that inherits the members of the base class is called **the derived class**.
@@ -682,3 +688,270 @@ Code reuse comes in two flavors:
         public bool HasBonus { get; set; }
     }
     ```
+
+## 4. Understanding Polymorphism
+
+Polymorphism is often referred to as the third pillar of object-oriented programming, after encapsulation and inheritance. Polymorphism is a Greek word that means **"many-shaped** and it has two distinct aspects:
+- At run time, object of a derived class may be treated as objects of a base class in places such as method parameters and collections or arrays. When this polymorphism occurs, the object's declared type is no longer identical to its run-time type.
+- Base classes may define and implement **virtual** methods, and derived classes can **override** them, which means they provide their own definition and implementation. At run-time, when client code calls the method, the CRL looks up the run-time type of the object, and invokes that override of the virtual method. In your source code you can call a method on a base class, and cause a derived class's version of the method to be executed.
+
+Virtual meethod enable you to work with groups of the related object in a uniform way. 
+
+Example:
+```csharp
+public class Shape
+{
+    // A few example members
+    public int X { get; private set; }
+    public int Y { get; private set; }
+    public int Height { get; set; }
+    public int Width { get; set; }
+
+    // Virtual method
+    public virtual void Draw()
+    {
+        Console.WriteLine("Performing base class drawing tasks");
+    }
+}
+
+public class Circle : Shape
+{
+    public override void Draw()
+    {
+        // Code to draw a circle...
+        Console.WriteLine("Drawing a circle");
+        base.Draw();
+    }
+}
+public class Rectangle : Shape
+{
+    public override void Draw()
+    {
+        // Code to draw a rectangle...
+        Console.WriteLine("Drawing a rectangle");
+        base.Draw();
+    }
+}
+public class Triangle : Shape
+{
+    public override void Draw()
+    {
+        // Code to draw a triangle...
+        Console.WriteLine("Drawing a triangle");
+        base.Draw();
+    }
+}
+
+// Polymorphism at work #1: a Rectangle, Triangle and Circle
+// can all be used wherever a Shape is expected. No cast is
+// required because an implicit conversion exists from a derived
+// class to its base class.
+var shapes = new List<Shape>
+{
+    new Rectangle(),
+    new Triangle(),
+    new Circle()
+};
+
+// Polymorphism at work #2: the virtual method Draw is
+// invoked on each of the derived classes, not the base class.
+foreach (var shape in shapes)
+{
+    shape.Draw();
+}
+/* Output:
+    Drawing a rectangle
+    Performing base class drawing tasks
+    Drawing a triangle
+    Performing base class drawing tasks
+    Drawing a circle
+    Performing base class drawing tasks
+*/
+```
+In C#, every type is polymorphic because all types, including user-defined types, inherit from **Object**.
+
+- ## Virtual Members
+When a derived class inherits from a base class, it gains all the methods, fields, properties, and events of the base class. The designer of the derived class different choices for the behavior of virtual methods:
+- The derived class may override virtual members in the base class, defining new behavior.
+- The derived class may inherit the closest base class method without overriding it, preserving the existing behavior but enabling further derived classes to override the method.
+- The derived class may define new non-virtual implementation of those members that hide the base class implementations.
+
+A derived class can override a base class member only if the base class member is declared as **virtual** or **abstract**. The derived member must use the **override** keyword to explicitly indicate that the method is intended to participate in virtual invocation. 
+
+Example:
+```csharp
+public class BaseClass
+{
+    public virtual void DoWork() { }
+    public virtual int WorkProperty
+    {
+        get { return 0; }
+    }
+}
+public class DerivedClass : BaseClass
+{
+    public override void DoWork() { }
+    public override int WorkProperty
+    {
+        get { return 0; }
+    }
+}
+
+//----------------------------------------------------
+DerivedClass B = new DerivedClass();
+B.DoWork();  // Calls the new method.
+
+BaseClass A = B;
+A.DoWork();  // Also calls the new method.
+```
+Virtual methods and properties enable derived classes to extend a base class without needing to use the base class implementation of a method.
+- ## Hide base class members with new members
+If you want your derived class to have a member with the same name as a member in a base class, you can use the **new** keyword to hide the base class member. The **new** keyword is put before the return type of a class member that is being replaced.
+
+Example:
+```csharp
+public class BaseClass
+{
+    public void DoWork() => WordField++;
+    public int WorkField;
+    public int WorkProperty {
+        get { return 0; }
+    }
+}
+
+public class DerivedClass: BaseClass
+{
+    public new void DoWork() { WorkField++; }
+    public new int WorkField;
+    public new int WorkProperty {
+        get {
+            return 0;
+        }
+    }
+}
+
+//------------------------------------------
+DerivedClass B = new DerivedClass();
+B.DoWork();  // Calls the new method.
+
+BaseClass A = (BaseClass)B;
+A.DoWork();  // Calls the old method.
+```
+
+- ## Prevent derived classes from overriding virtual members
+
+```csharp
+public class A
+{
+    public virtual void DoWork() { }
+}
+public class B : A
+{
+    public override void DoWork() { }
+}
+
+public class C : B
+{
+    public sealed override void DoWork() { }
+}
+```
+Sealed methods can be replaced by derived classes by using the **new** keyword.
+
+Example:
+```csharp
+public class D : C
+{
+    public new void DoWork() { }
+}
+```
+- ## Access base class virtual member from derived classes
+```csharp
+public class Base
+{
+    public virtual void DoWork() {/*...*/ }
+}
+public class Derived : Base
+{
+    public override void DoWork()
+    {
+        //Perform Derived's work here
+        //...
+        // Call DoWork on base class
+        base.DoWork();
+    }
+}
+```
+## 5. Abstraction
+The **abstract** keyword enables you to create classes and class members that are incomplete and must be implemented in a derived class.
+
+Classes can be declared as abstract by putting the keyword abstract before the class definition. 
+
+For example:
+```csharp
+public abstract class A
+{
+    //Class members here.
+}
+```
+**Notes:**
+- Abstract classes cannot be instantiated. 
+- The purpose of an abstract class is to provide a common definition of a base class that multiple derived classes can share.
+- Abstract classes can define abstract methods by adding the keyword **abstract** before the return type of the method.
+
+Example:
+```csharp
+public abstract class A
+{
+    public abstract void DoWork(int i);
+}
+
+public class B: A
+{
+    public override void DoWork(int i)
+    {
+        //Functionality here.
+    }
+}
+```
+
+- Abstract methods have no implementation, so the method definition is followed by a semicolon instead of a normal method block. Derived classes of the abstract class must implement all abstract methods. When an abstract class inherits a virtual method from a base class, the abstract class can override the virtual method with an abstract method.
+
+Example:
+```csharp
+// compile with: -target:library
+public class D
+{
+    public virtual void DoWork(int i)
+    {
+        // Original implementation.
+    }
+}
+
+public abstract class E : D
+{
+    public abstract override void DoWork(int i);
+}
+
+public class F : E
+{
+    public override void DoWork(int i)
+    {
+        // New implementation.
+    }
+}
+```
+- Classes can be declared as sealed by putting the keyword **sealed** before the class definition.
+
+A sealed class cannot be used as a base class. For this reason, it cannot also be abstract class. Sealed classes prevent derivation. Because they can never be used as a base class, some run-time optimization can make calling sealed class members slightly faster.
+
+A method, indexer, property, or event on a derived class that is overriding a virtual member of the base class can declare that member as sealed.
+
+Example:
+```csharp
+public class D : C
+{
+    public sealed override void DoWork() { }
+}
+```
+
+## 6. Understanding Base Class/Derived Class Casting Rules
