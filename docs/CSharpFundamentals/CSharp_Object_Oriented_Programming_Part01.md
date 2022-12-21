@@ -34,7 +34,7 @@ C# is an object-oriented programming language. The four principles of object-ori
 - Inheritance Ability to create a new abstractions based on existing abstractions.
 - Polymorphism Ability to implement inherited properties or methods in different ways across multiple abstractions.
 
-## 2. Understanding Encapsulation
+## 2. First Pillar of OOP - Understanding Encapsulation
 
 - ## Introducing the C# class type
 
@@ -379,7 +379,7 @@ public string SocialSecurityNumber
     private set => _empSSN = value;
 }
 ```
-## 3. Understanding Inheritance and Polymorphism
+## 3. Second Pillar of OOP - Understanding Inheritance
    - ## The Basic Mechanics of Inheritance
 Code reuse comes in two flavors: 
 - **Inheritance (the is-a relationship):** It allows you to define a child cass that reuses (inherits), extends, or modifies the behavior of a **parent class**. The class whose members are inherited is called **the base class**. The class that inherits the members of the base class is called **the derived class**.
@@ -689,7 +689,7 @@ Code reuse comes in two flavors:
     }
     ```
 
-## 4. Understanding Polymorphism
+## 4. Third Pillar of OOP - Understanding Polymorphism
 
 Polymorphism is often referred to as the third pillar of object-oriented programming, after encapsulation and inheritance. Polymorphism is a Greek word that means **"many-shaped** and it has two distinct aspects:
 - At run time, object of a derived class may be treated as objects of a base class in places such as method parameters and collections or arrays. When this polymorphism occurs, the object's declared type is no longer identical to its run-time type.
@@ -881,7 +881,7 @@ public class Derived : Base
     }
 }
 ```
-## 5. Abstraction
+## Fourth Pillar of OOP - Abstraction
 The **abstract** keyword enables you to create classes and class members that are incomplete and must be implemented in a derived class.
 
 Classes can be declared as abstract by putting the keyword abstract before the class definition. 
