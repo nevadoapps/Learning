@@ -103,6 +103,184 @@ The only purpose of **System.ApplicationException** is to identify the source of
 
 ## 2. Working with Interfaces
 
+An interface defines a contract. Any class or struct that implements that contract must provide an implementation of the members defined in the interface. An interface may define a default implementation for members. It may also define static members in order to provide a single implementation for common functionality. 
 
+Beginning C#11, an interface may define **static abstract** or **static virtual** members to declare that an implementing type must provide the declared members. Typically, **static virtual** methods declare that an implementation must define a set of **overloaded operators**.
+
+Example:
+```csharp
+interface ISampleInterface
+{
+    void SampleMethod();
+}
+
+class ImplementationClass: ISampleInterface
+{
+    void ISampleInterfaceClass.SampleMethod()
+    {
+
+    }
+
+    static void Main()
+    {
+        //Declare an interface instance
+        ISampleInterface obj = new ImplementationClass();
+        
+        //Call the member
+        obj.SampleMethod();
+    }
+}
+```
+Example:
+```csharp
+interface IPoint
+{
+    // Property signatures:
+    int X { get; set; }
+
+    int Y { get; set; }
+
+    double Distance { get; }
+}
+
+class Point : IPoint
+{
+    // Constructor:
+    public Point(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
+
+    // Property implementation:
+    public int X { get; set; }
+
+    public int Y { get; set; }
+
+    // Property implementation
+    public double Distance =>
+       Math.Sqrt(X * X + Y * Y);
+}
+
+class MainClass
+{
+    static void PrintPoint(IPoint p)
+    {
+        Console.WriteLine("x={0}, y={1}", p.X, p.Y);
+    }
+
+    static void Main()
+    {
+        IPoint p = new Point(2, 3);
+        Console.Write("My Point: ");
+        PrintPoint(p);
+    }
+}
+// Output: My Point: x=2, y=3
+```
+- **Interface Inheritance**
+
+Interfaces may not contain instance state. While static field are now permitted, instance fields are not permitted in interfaces. **Interface auto-properties** aren't supported in interfaces, as they would implicitly declare a hidden field.  In an interface declaration, the following code doesn't declare an auto-implemented property as it does in a class or struct. Instead, it declares a property that doesn't have a default implementation but must be implemented in any type that implements the interface:
+
+Example:
+```csharp
+public interface INamed
+{
+  public string Name {get; set;}
+}
+```
+
+An interface can inherit from one or more base interfaces. When an interface overrides a method implemented in a base interface, it must use the explicit interface implementation syntax.
+
+When a base type list contains a base class and interfaces, the base class must come first in the list.
+
+A class that implements an interface can explicitly implement members of that interface. An explicitly implemented member can't be accessed through a class instance, but only through an instance of the interface. In addition, default interface members can only be accessed through an instance of the interface.
+
+- **Explicit Interface Implementation**
+
+If a class implements two interfaces that contain a member with the same signature, then implementing that member on the class will cause both interfaces to use that member as their implementation. In the following example, all the calls to Paint invoke the same method. This first sample defines the types:
+
+Example:
+```csharp
+public interface IControl
+{
+    void Paint();
+}
+public interface ISurface
+{
+    void Paint();
+}
+public class SampleClass : IControl, ISurface
+{
+    // Both ISurface.Paint and IControl.Paint call this method.
+    public void Paint()
+    {
+        Console.WriteLine("Paint method in SampleClass");
+    }
+}
+
+SampleClass sample = new SampleClass();
+IControl control = sample;
+ISurface surface = sample;
+
+// The following lines all call the same method.
+sample.Paint();
+control.Paint();
+surface.Paint();
+
+// Output:
+// Paint method in SampleClass
+// Paint method in SampleClass
+// Paint method in SampleClass
+```
+
+But you might not want the same implementation to be called for both interfaces. To call a different implementation depending on which interface is in use, you can implement an interface member explicitly. An explicit interface implementation is a class member that is only called through the specified interface. Name the class member by prefixing it with the name of the interface and a period. For example:
+
+Example:
+```csharp
+public class SampleClass : IControl, ISurface
+{
+    void IControl.Paint()
+    {
+        System.Console.WriteLine("IControl.Paint");
+    }
+    void ISurface.Paint()
+    {
+        System.Console.WriteLine("ISurface.Paint");
+    }
+}
+
+SampleClass sample = new SampleClass();
+IControl control = sample;
+ISurface surface = sample;
+
+// The following lines all call the same method.
+//sample.Paint(); // Compiler error.
+control.Paint();  // Calls IControl.Paint on SampleClass.
+surface.Paint();  // Calls ISurface.Paint on SampleClass.
+
+// Output:
+// IControl.Paint
+// ISurface.Paint
+```
+
+You can define an implementation for members declared in an interface. If a class inherits a method implementation from an interface, that method is only accessible through a reference of the interface type. The inherited member doesn't appear as part of the public interface. The following sample defines a default implementation for an interface method:
+
+Example:
+```csharp
+public interface IControl
+{
+    void Paint() => Console.WriteLine("Default Paint method");
+}
+public class SampleClass : IControl
+{
+    // Paint() is inherited from IControl.
+}
+
+var sample = new SampleClass();
+//sample.Paint();// "Paint" isn't accessible.
+var control = sample as IControl;
+control.Paint();
+```
 
 #3 3. Understanding Object Lifetime
