@@ -66,7 +66,6 @@ Table of Contents:
     3. Interfaces vs. Abstract Base Classes
     4. Understanding Object Lifetime
 - [Object Oriented Programming with C# - Part 03](docs/CSharpFundamentals/CSharp_Object_Oriented_Programming_Part03.md)
-
 </p>
 </details>
 
