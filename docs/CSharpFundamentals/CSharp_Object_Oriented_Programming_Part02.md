@@ -2,7 +2,10 @@
 Table of contents: 
 1. Exception Handling
 2. Working with Interfaces
-3. Understanding Object Lifetime
+    - Obtaining Interface References: The as Keyword
+    - Obtaining Interface References: The is Keyword
+3. Interfaces vs. Abstract Base Classes
+4. Understanding Object Lifetime
 
 ## 1. Exception Handling
 
@@ -283,4 +286,164 @@ var control = sample as IControl;
 control.Paint();
 ```
 
-#3 3. Understanding Object Lifetime
+- **Obtaining Interface References: The as Keyword**
+
+If the object can be treated as the specified interface, you are returned a reference to the interface in question. If not, you receive a null reference. Therefore, be sure to check against a **null** value before proceeding.
+
+Example:
+```csharp
+static void Main(string[] args)
+{
+    Hexagon hex2 = new Hexagon("Peter");
+    IPointy itfPt2 = hex as IPoint;
+
+    if (itfPt2 != null)
+        Console.WriteLine("Points: {0}", itfPt2.Points);
+    else
+        Console.WriteLine("Ooops");
+}
+```
+- **Obtaining Interface References: The is keyword (7.0)**
+
+You may also check for an implemented interface using the **is** keyword. If the object inn question is not compatible with the specified interface, you are return the value false. If you supply a variable name in statement, the type is assigned into the variable, eliminating the need to do the type check and perform a cast.
+
+Example:
+```csharp
+static void Main(string[] args)
+{
+    if (hex is IPointy hvar)
+        Console.WriteLine($"Points:{hvar.Points}");
+    else
+        Console.WriteLine($"Oops");
+}
+```
+
+- **Interfaces as Parameters**
+
+The interfaces are valid types, you may construct methods that take interfaces as parameters.
+
+```csharp
+public interface IBasePerson
+{
+    void GetFullName();
+    void GetSocialNumber();
+}
+
+public class Employee: IBasePerson
+{
+    private string _department;
+    private string _name;
+    private string _socialNumber;
+
+    public string Department { get { return _department }; set { _department = value } ; }
+
+    public Employee() {}
+
+    public Employee(string name, string socialNumber)
+    {
+        _name = name;
+        _socialNumber = socialNumber;
+    }
+
+    public void GetDepartment()
+    {
+        Console.WriteLine($"The department of the employee is: {this._department}");
+    }
+
+    public void GetFullName()
+    {
+        Console.WriteLine($"The full name of the employee is: {this._name}");
+    }
+
+    public void GetSocialNumber()
+    {
+        Console.WriteLine($"The social number of the employee is: {this._socialNumber}");
+    }
+}
+
+public class Manager: Employee, IBasePerson
+{
+    IList<Employee> _listOfEmployees;
+
+    public Manager() {
+        _listOfEmployees = new List<Employee>();
+    }
+
+    public Manager(IList<Employee> employees)
+    {
+        _listOfEmployee = employees;
+    }
+
+    public void GetListofEmployees()
+    {
+        Console.WriteLine($"List of Employees: {string.Join(",\n", _listofEmployees.Name})");
+    }
+}
+
+public class Program
+{
+    static void Main(string[] args)
+    {
+
+    }
+}
+```
+- **Explicit Interface Implementation**
+
+A class or structure can implement any number of interfaces. Given this, there is always the possibility you might implement interfaces that contain identical member and, there have a name class to contend with.
+
+Example:
+```csharp
+public interface IDrawToForm
+{
+    void Draw();
+}
+
+public interface IDrawToMemory
+{
+    void Draw();
+}
+
+public interface IDrawToPrinter
+{
+    void Draw();
+}
+
+public class Octagon: IDrawToForm, IDrawToMemory, IDrawToPrinter
+{
+    void IDrawToForm.Draw()
+    {
+        Console.WriteLine("Draw to form");
+    }    
+
+    void IDrawToMemory.Draw()
+    {
+        Console.WriteLine("Draw to memory");
+    }        
+
+    void IDrawToPrinter.Draw()
+    {
+        Console.WriteLine("Draw to printer");
+    }        
+}
+
+static void Main(string[] args)
+{
+    Octagon oct = new Octagon();
+
+    IDrawToForm itfForm = (IDrawToForm) oct;
+    itfForm.Draw();
+
+    //Or
+    ((IDrawToForm) oct).Draw();
+
+    //or
+
+    if (oct is IDrawToForm dtm)
+        dtm.Draw();
+}
+```
+
+**Notes:**
+-- When using this syntax, you do not supply an access modifier; explicitly implemented members are automatically private.
+## 4. Understanding Object Lifetime
