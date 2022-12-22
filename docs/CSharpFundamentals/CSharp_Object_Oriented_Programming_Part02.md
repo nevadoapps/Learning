@@ -264,4 +264,23 @@ surface.Paint();  // Calls ISurface.Paint on SampleClass.
 // ISurface.Paint
 ```
 
+You can define an implementation for members declared in an interface. If a class inherits a method implementation from an interface, that method is only accessible through a reference of the interface type. The inherited member doesn't appear as part of the public interface. The following sample defines a default implementation for an interface method:
+
+Example:
+```csharp
+public interface IControl
+{
+    void Paint() => Console.WriteLine("Default Paint method");
+}
+public class SampleClass : IControl
+{
+    // Paint() is inherited from IControl.
+}
+
+var sample = new SampleClass();
+//sample.Paint();// "Paint" isn't accessible.
+var control = sample as IControl;
+control.Paint();
+```
+
 #3 3. Understanding Object Lifetime
