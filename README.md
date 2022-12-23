@@ -66,6 +66,15 @@ Table of Contents:
     3. Interfaces vs. Abstract Base Classes
     4. Understanding Object Lifetime
 - [Object Oriented Programming with C# - Part 03](docs/CSharpFundamentals/CSharp_Object_Oriented_Programming_Part03.md)
+    - System.Collections Classes
+    - System.Collections.Generic Classes
+    - Key Interfaces supported by Classes of System.Collections.Generic
+    - Working with List\<T>
+    - Search and sort lists
+    - Implementing a Collection of Key/Value Pairs (Dictionary)
+    - Using LINQ to Access Collection
+    - Working with the Stack<T> Class
+    - Working with the Queue\<T> Class
 </p>
 </details>
 
