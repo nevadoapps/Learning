@@ -1,10 +1,19 @@
 # Object Oriented Programming with C# - Part 03
 
 Table of contents:
-1. Collections
 
+## Collections
+- System.Collections Classes
+- System.Collections.Generic Classes
+- Key Interfaces supported by Classes of System.Collections.Generic
+- Working with List\<T>
+- Search and sort lists
+- Implementing a Collection of Key/Value Pairs
+- Using LINQ to Access Collection
+- Working with the Stack<T> Class
+- Working with the Queue\<T> Class
 
-## 1. Collections
+## Collections
 
 Arrays are most useful for creating and working with a fixed number of strongly typed objects.
 
