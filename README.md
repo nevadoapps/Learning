@@ -68,7 +68,7 @@ Table of Contents:
         3. Interfaces vs. Abstract Base Classes
         4. Understanding Object Lifetime
     - [Object Oriented Programming with C# - Part 03](docs/CSharpFundamentals/CSharp_Object_Oriented_Programming_Part03.md) 
-    
+
         **Collections**
         - System.Collections Classes
         - System.Collections.Generic Classes
@@ -79,6 +79,16 @@ Table of Contents:
         - Using LINQ to Access Collection
         - Working with the Stack<T> Class
         - Working with the Queue\<T> Class
+    - [Object Oriented Programming with C# - Part 04](docs/CSharpFundamentals//CSharp_Object_Oriented_Programming_Part04.md)
+    
+        **Generics**
+        - Creating Custom Generic Methods
+        - Constraints on type Parameters
+        - Enum Constraint
+        - Creating Custom Generic Structures and Classes
+        - Generics overview
+        - Pattern Matching with Generics (7.1)
+
 </p>
 </details>
 
