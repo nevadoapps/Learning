@@ -256,6 +256,7 @@ class Program
         return a+b;
     }
 
+    //No Return Value - Method
     static void WriteToConsole(string message)
     { 
         Console.WriteLine($"{Message}");
@@ -736,7 +737,7 @@ class Person
 
     public string Display()
     {
-       return $"Name: {personName}, Age: {personAge}";
+        return $"Name: {personName}, Age: {personAge}";
     }
 }
 
@@ -752,20 +753,122 @@ public class Program
     static void Main(string[] args)
     {
         //Passing ref-types by value
-        Console.WriteLine("**** Passing person object by value ****");
+        Console.WriteLine("**** Passing person object by value Example ****");
         Person fred = new Person("Fred", 12);
-        Console.WriteLine($"\nBefore by value call, Fred - Person is:{fred.Display()}");
+        Console.WriteLine($"Initial state of Fred Instance of type Person -> {fred.Display()}");
 
+        Console.WriteLine();
+
+        Console.WriteLine($"SendAPersonValue is to be called with Passing Fred by Value and Age to Set 99");
         SendAPersonByValue(fred, 99);
-        Console.WriteLine($"\nAfter by value call, Fred - Person is:{fred.Display()}");
+        Console.WriteLine($"SendAPersonValue is called with Passing Fred by Value and Age to set 99, Fred - > {fred.Display()}");
 
+        Console.WriteLine();
+
+        Console.WriteLine("A new instance to be created by using Fred instance of the type");
         var jane = fred;
         Console.WriteLine("Fred object is copied to Jane");
+
+        Console.WriteLine();
+
+        Console.WriteLine($"SendAPersonValue is to be called with Passing Jane by Value and Age to Set 101");
         SendAPersonByValue(jane, 101);
-        Console.WriteLine($"\nAfter by value call, Jane - Person is:{fred.Display()}");
+        Console.WriteLine($"SendAPersonValue is called with Passing Jane by Value and Age to set 101, Jane ->  {jane.Display()}");
+        Console.WriteLine($"Current state of Fred Instance of type Person - >{fred.Display()}");
+    }
+}
+
+/*
+**** Passing person object by value Example ****
+Initial state of Fred Instance of type Person -> Name: Fred, Age: 12
+
+SendAPersonValue is to be called with Passing Fred by Value and Age to Set 99
+SendAPersonValue is called with Passing Fred by Value and Age to set 99, Fred - > Name: Fred, Age: 99
+
+A new instance to be created by using Fred instance of the type
+Fred object is copied to Jane
+
+SendAPersonValue is to be called with Passing Jane by Value and Age to Set 101
+SendAPersonValue is called with Passing Jane by Value and Age to set 101, Jane ->  Name: Fred, Age: 101
+Current state of Fred Instance of type Person - >Name: Fred, Age: 101 
+*/
+```
+
+- ## Passing Reference Types by Reference
+
+```csharp
+class Person
+{
+    public string personName;
+    public int personAge;
+
+    public Person(string name, int age)
+    {
+        personAge = age;
+        personName = name;
+    }
+
+    public Person() { }
+
+    public string Display()
+    {
+        return $"Name: {personName}, Age: {personAge}";
+    }
+}
+
+public class Program
+{
+    static void SendAPersonByValue(ref Person p, int age)
+    {
+        p.personAge = age;
+        //Will the caller see the reassigment?
+        p = new Person("Nikki", age + 1);
+    }
+
+    static void Main(string[] args)
+    {
+        //Passing ref-types by value
+        Console.WriteLine("**** Passing person object by reference Example ****");
+        Person fred = new Person("Fred", 12);
+        Console.WriteLine($"Initial state of Fred Instance of type Person -> {fred.Display()}");
+
+        Console.WriteLine();
+
+        Console.WriteLine($"SendAPersonValue is to be called with Passing Fred by Value and Age to Set 99");
+        SendAPersonByValue(ref fred, 99);
+        Console.WriteLine($"SendAPersonValue is called with Passing Fred by Value and Age to set 99, Fred - > {fred.Display()}");
+
+        Console.WriteLine();
+
+        Console.WriteLine("A new instance to be created by using Fred instance of the type");
+        var jane = fred;
+        Console.WriteLine("Fred object is copied to Jane");
+
+        Console.WriteLine();
+
+        Console.WriteLine($"SendAPersonValue is to be called with Passing Jane by Value and Age to Set 101");
+        SendAPersonByValue(ref jane, 101);
+        Console.WriteLine($"SendAPersonValue is called with Passing Jane by Value and Age to set 101, Jane ->  {jane.Display()}");
+        Console.WriteLine($"Current state of Fred Instance of type Person - >{fred.Display()}");
     }
 }
 ```
+
+/*
+**** Passing person object by reference Example ****
+Initial state of Fred Instance of type Person -> Name: Fred, Age: 12
+
+SendAPersonValue is to be called with Passing Fred by Value and Age to Set 99
+SendAPersonValue is called with Passing Fred by Value and Age to set 99, Fred - > Name: Nikki, Age: 100
+
+A new instance to be created by using Fred instance of the type
+Fred object is copied to Jane
+
+SendAPersonValue is to be called with Passing Jane by Value and Age to Set 101
+SendAPersonValue is called with Passing Jane by Value and Age to set 101, Jane ->  Name: Nikki, Age: 102
+Current state of Fred Instance of type Person - >Name: Nikki, Age: 101
+*/
+
 - ## Value Types and Reference Types Comparison
 
 | Intriguing Question | Value Type | Reference Type |
