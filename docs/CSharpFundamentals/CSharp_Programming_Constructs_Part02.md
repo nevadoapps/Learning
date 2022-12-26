@@ -852,7 +852,6 @@ public class Program
         Console.WriteLine($"Current state of Fred Instance of type Person - >{fred.Display()}");
     }
 }
-```
 
 /*
 **** Passing person object by reference Example ****
@@ -868,6 +867,7 @@ SendAPersonValue is to be called with Passing Jane by Value and Age to Set 101
 SendAPersonValue is called with Passing Jane by Value and Age to set 101, Jane ->  Name: Nikki, Age: 102
 Current state of Fred Instance of type Person - >Name: Nikki, Age: 101
 */
+```
 
 - ## Value Types and Reference Types Comparison
 
