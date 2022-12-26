@@ -29,6 +29,7 @@ Table of Contents:
     - The Null-Coalescing Operator
     - The Null-Coalescing Assigment Operator (8.0)
     - The Conditional Operator
+    - The Default Keyword
 15. Tuples (Not documented yet!)    
 
 <details>
@@ -988,6 +989,53 @@ Console.WriteLine(sum2);  // output: 6
 
 var sum3 = SumNumbers(numberSets, 1);
 Console.WriteLine(sum3);  // output: NaN
+```
+
+- ## The Default Keyword
+
+```csharp
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("***** Testing aInt *****");
+            int? aInt = default;
+
+            if (aInt is null)
+            {
+                Console.WriteLine($"aInt is null");
+                aInt ??= 22;
+                Console.WriteLine($"Current value of aInt is {aInt}");
+            }
+            else
+                Console.WriteLine($"aInt is not null and the value of aInt: {aInt}");
+
+            Console.WriteLine();
+            Console.WriteLine("***** Testing bInt *****");
+
+            int? bInt = default(int);
+
+            if (aInt is null)
+            {
+                Console.WriteLine($"bInt is null");
+                bInt ??= 32;
+                Console.WriteLine($"Current value of aInt is {bInt}");
+            }
+            else
+                Console.WriteLine($"bInt is not null and the value of bInt: {bInt}");
+        }
+    }
+
+    /*
+
+    ***** Testing aInt *****
+    aInt is null
+    Current value of aInt is 22
+
+    ***** Testing bInt *****
+    bInt is not null and the value of bInt: 0
+    */
+}
 ```
 </p>
 </details>
