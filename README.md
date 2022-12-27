@@ -88,6 +88,18 @@ Table of Contents:
         - Creating Custom Generic Structures and Classes
         - Generics overview
         - Pattern Matching with Generics (7.1)
+    - [Object Oriented Programming with C# - Part 5](docs/CSharpFundamentals//CSharp_Object_Oriented_Programming_Part05.md)
+
+        **Advanced C# Languages Features**
+        - Understanding Indexer Methods
+        - Understanding Operator Methods
+        - Understanding Custom Type Conversions
+        - Understanding Extension Methods
+        - Understanding Anonymous Types
+    - [Object Oriented Programming with C# - Part 6](docs/CSharpFundamentals/CSharp_Object_Oriented_Programming_Part06.md)
+
+        **Linq to Objects**
+        - 
 
 </p>
 </details>
