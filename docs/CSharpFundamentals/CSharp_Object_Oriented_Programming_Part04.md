@@ -143,15 +143,15 @@ Typically, you create generic classes by starting with an existing concrete clas
 
 - Which types to generalize into type parameters
 
-    As a rule, the more types you can parameterize, the more flexible and reusable you code becomes. However, too much generalizatino can create that is difficult for other developers to read and understand.
+    As a rule, the more types you can parameterize, the more flexible and reusable your code becomes. However, too much generalization can create that is difficult for other developers to read and understand.
 
 - What contraints, if any, to apply to the parameters    
 
-    A good rule is to apply the maximum constraints possible that will stil let you handle the types you must handle. For example, if you know that your generic class is intended for use only with reference types, app the class constraint. That will prevent unintended use of your class with value types, and will enable you to use the **as** operator on **T**, check for null values.
+    A good rule is to apply the maximum constraints possible that will still let you handle the types you must handle. For example, if you know that your generic class is intended for use only with reference types, apply the class constraint. That will prevent unintended use of your class with value types, and will enable you to use the **as** operator on **T**, check for null values.
 
 - Whether to factor generic behavior into base classes and subclasses
 
-    Because generic classes can server as a base classes, the same design considerations apply here as with non-generic classes. 
+    Because generic classes can serve as a base class, the same design considerations apply here as with non-generic classes. 
 
 - Whether to implement one or more generic interfaces
 

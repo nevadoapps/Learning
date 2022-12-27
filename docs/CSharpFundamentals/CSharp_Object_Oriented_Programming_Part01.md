@@ -289,7 +289,7 @@ internal class Radio
 }
 ```
 - ## The First Pillar: C#'s Encapsulation Services
-The concept of encapsulatino revolves around the notion of that an object's data should not be directly accessible from an object instance. Rather class data is defined as private. If the object user wants to alter the state of an object, it does so indirectly using the public members. 
+The concept of encapsulation revolves around the notion of that an object's data should not be directly accessible from an object instance. Rather class data is defined as private. If the object user wants to alter the state of an object, it does so indirectly using the public members. 
 
 Example:
 ```csharp
@@ -387,16 +387,16 @@ public string SocialSecurityNumber
 ## 3. Second Pillar of OOP - Understanding Inheritance
    - ## The Basic Mechanics of Inheritance
 Code reuse comes in two flavors: 
-- **Inheritance (the is-a relationship):** It allows you to define a child cass that reuses (inherits), extends, or modifies the behavior of a **parent class**. The class whose members are inherited is called **the base class**. The class that inherits the members of the base class is called **the derived class**.
+- **Inheritance (the is-a relationship):** It allows you to define a child class that reuses (inherits), extends, or modifies the behavior of a **parent class**. The class whose members are inherited is called **the base class**. The class that inherits the members of the base class is called **the derived class**.
 
     **Notes:** 
 
-- Not all members of a base class are inherited by derived (child) classes. The following members are not inherited:
-    - Static constructors, which initialize the static data of a class.
-    - Instance constructors, which you call to create a new instance of the class. Each class must define its own constructurs.
-    - Finalizers, which are called by the runtime's garbage collector to destroy instances of a class.
-- While all other members of a base class inherited by derived classes, whether they are visible of not depends on their accessibility. A member's accessibility affects its visibility for derived classes as follows:
-    - Private members are visible only in derived classes that are nested in their base class. Otherwise, they are not visible in derived classes. In the following example, **A.B** is nested class that derives from **A**, and **C** derives from A. The private **A._value** field is visible for in A.B. However, if you remove the comments from the **C.GetValue** method an attempt to compile the example, it produces compiler error, CS0122: "A._value is inacsessible due to its protection level."
+    - Not all members of a base class are inherited by derived (child) classes. The following members are not inherited:
+        - Static constructors, which initialize the static data of a class.
+        - Instance constructors, which you call to create a new instance of the class. Each class must define its own constructurs.
+        - Finalizers, which are called by the runtime's garbage collector to destroy instances of a class.
+    - While all other members of a base class inherited by derived classes, whether they are visible of not depends on their accessibility. A member's accessibility affects its visibility for derived classes as follows:
+        - Private members are visible only in derived classes that are nested in their base class. Otherwise, they are not visible in derived classes. In the following example, **A.B** is nested class that derives from **A**, and **C** derives from A. The private **A._value** field is visible for in A.B. However, if you remove the comments from the **C.GetValue** method an attempt to compile the example, it produces compiler error, CS0122: "A._value is inacsessible due to its protection level."
 
     Example:
 
@@ -698,7 +698,7 @@ Code reuse comes in two flavors:
 
 Polymorphism is often referred to as the third pillar of object-oriented programming, after encapsulation and inheritance. Polymorphism is a Greek word that means **"many-shaped** and it has two distinct aspects:
 - At run time, object of a derived class may be treated as objects of a base class in places such as method parameters and collections or arrays. When this polymorphism occurs, the object's declared type is no longer identical to its run-time type.
-- Base classes may define and implement **virtual** methods, and derived classes can **override** them, which means they provide their own definition and implementation. At run-time, when client code calls the method, the CRL looks up the run-time type of the object, and invokes that override of the virtual method. In your source code you can call a method on a base class, and cause a derived class's version of the method to be executed.
+- Base classes may define and implement **virtual** methods, and derived classes can **override** them, which means they provide their own definition and implementation. At run-time, when client code calls the method, the CLR looks up the run-time type of the object, and invokes that override of the virtual method. In your source code you can call a method on a base class, and cause a derived class's version of the method to be executed.
 
 Virtual meethod enable you to work with groups of the related object in a uniform way. 
 
@@ -1071,7 +1071,7 @@ static void GivePromotion(Employee emp)
 ```
 
 ## 9. Cast Expression
-A cast expression o the form **(T)E** performs an explicit conversion of the result of expression **E** to type **T**. If no explicit conversion exists from the type of **E** to type of **T**, a compile-time error occurs.
+A cast expression of the form **(T)E** performs an explicit conversion of the result of expression **E** to type **T**. If no explicit conversion exists from the type of **E** to type of **T**, a compile-time error occurs.
 
 Example:
 ```csharp

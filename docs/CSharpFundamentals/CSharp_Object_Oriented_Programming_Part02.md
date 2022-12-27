@@ -16,7 +16,7 @@ Programming with structured exception handling involves the use of four interrel
 - A block of code on the caller's side that invokes the exception-prone number
 - A block of code on the caller's side that will process (or catch) the exception, should it occur
 
-The C# offers five keyword (try, catch, throw, finally, and when) that allow you throw and handle exception.
+The C# offers five keywords (try, catch, throw, finally, and when) that allow you throw and handle exception.
 
 Example: (Simple Exception Handling)
 ```csharp
