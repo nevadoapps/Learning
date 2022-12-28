@@ -92,14 +92,17 @@ Table of Contents:
 
         **Advanced C# Languages Features**
         - Understanding Indexer Methods
-        - Understanding Operator Methods
+        - Understanding Operator Overloading
         - Understanding Custom Type Conversions
         - Understanding Extension Methods
         - Understanding Anonymous Types
     - [Object Oriented Programming with C# - Part 6](docs/CSharpFundamentals/CSharp_Object_Oriented_Programming_Part06.md)
 
-        **Linq to Objects**
-        - 
+        **LINQ to Objects**
+        - LINQ-Specific Programming Constructs
+        - Applying LINQ Queries to Primitive Arrays
+        - Return the Result of a LINQ Query
+        - Applying LING Queries to Collection Objects
 
 </p>
 </details>
