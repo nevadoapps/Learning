@@ -4,17 +4,17 @@ Table of contents:
 - What is LINQ (Language Integrated Query)?
 - Introduction to LINQ Queries
 - Basic LINQ Query Operations
-- Standard Query Operators
+- Standard Query Operators [Reading](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/standard-query-operators-overview)
+
     - Sorting Data
     - Set Operations
     - Filtering Data
     - Quantifier Operations
     - Projection Operations
-    - Partioning Operations
+    - Partioning Data
     - Join Operations
     - Grouping Data
     - Generation Operations
-    - Equality Operatios
     - Element Operations
     - Converting Data Types
     - Concatenation Operations
@@ -642,14 +642,344 @@ The select clause produces the results of the query and specifies the "shape" or
     ```
 
     - **Filtering Data**
+
+    Filtering refers to the operation of restricting the result set to contain only those elements that satisfy a specified condition. It is also known as selection.
+
+    | Method names | Description | C# query expression syntax | More information | 
+    | -- | -- | -- | -- |
+    | OfType |Selects values, depending on their ability to be cast to a specified type. |Not applicable. |Enumerable.OfType Queryable.OfType |
+    | Where | Selects values that are based on a predicate function. | where | Enumerable.Where Queryable.Where | 
+
     - **Quantifier Operations**
+
+    Quantifier operations return a Boolean value that indicates whether some or all of the elements in a sequence satisfy a condition.
+
+    | Method names | Description | C# query expression syntax | More information | 
+    | -- | -- | -- | -- |
+    | All | Determines whether all the elements in a sequence satisfy a condition.	| Not applicable. | Enumerable.All Queryable.All |
+    | Any | Determines whether any elements in a sequence satisfy a condition. | Not applicable. | Enumerable.Any Queryable.Any |
+    | Contains | Determines whether a sequence contains a specified element. | Not applicable. | Enumerable.Contains Queryable.Contains |
+
     - **Projection Operations**
-    - **Partioning Operations**
+
+    Projection refers to the operation of transforming an object into a new form that often consists only of those properties that will be subsequently used. By using projection, you can construct a new type that is built from each object. You can project a property and perform a mathematical function on it. You can also project the original object without changing it.
+
+    | Method names | Description | C# query expression syntax | More information | 
+    | -- | -- | -- | -- |
+    | Select | Projects values that are based on a transform function. | select | Enumerable.Select Queryable.Select |
+    | SelectMany | Projects sequences of values that are based on a transform function and then flattens them into one sequence. | Use multiple from clauses | Enumerable.SelectMany Queryable.SelectMany |
+    | Zip | Produces a sequence of tuples with elements from 2-3 specified sequences. | Not applicable. | Enumerable.Zip Queryable.Zip |
+
+    - **Partioning Data**
+
+    Partitioning in LINQ refers to the operation of dividing an input sequence into two sections, without rearranging the elements, and then returning one of the sections.
+
+    | Method names | Description | C# query expression syntax | More information | 
+    | -- | -- | -- | -- |
+    |Skip | Skips elements up to a specified position in a sequence. | Not applicable. | Enumerable.Skip Queryable.Skip | 
+    | SkipWhile | Skips elements based on a predicate function until an element does not satisfy the condition.	| Not applicable. |Enumerable.SkipWhile Queryable.SkipWhile |
+    | Take | Takes elements up to a specified position in a sequence. | Not applicable.	| Enumerable.Take Queryable.Take |
+    | TakeWhile	| Takes elements based on a predicate function until an element does not satisfy the condition.	| Not applicable. | Enumerable.TakeWhile Queryable.TakeWhile |
+    | Chunk	| Splits the elements of a sequence into chunks of a specified maximum size. | Not applicable. | Enumerable.Chunk Queryable.Chunk |
+
+    Example:
+    ```csharp
+    int chunkNumber = 1;
+    foreach (int[] chunk in Enumerable.Range(0, 8).Chunk(3))
+    {
+        Console.WriteLine($"Chunk {chunkNumber++}:");
+        foreach (int item in chunk)
+        {
+            Console.WriteLine($"    {item}");
+        }
+
+        Console.WriteLine();
+    }
+    // This code produces the following output:
+    // Chunk 1:
+    //    0
+    //    1
+    //    2
+    //
+    //Chunk 2:
+    //    3
+    //    4
+    //    5
+    //
+    //Chunk 3:
+    //    6
+    //    7
+    ```
+
     - **Join Operations**
+
+    A join of two data sources is the association of objects in one data source with objects that share a common attribute in another data source.
+
+    Joining is an important operation in queries that target data sources whose relationships to each other cannot be followed directly. In object-oriented programming, this could mean a correlation between objects that is not modeled, such as the backwards direction of a one-way relationship. An example of a one-way relationship is a Customer class that has a property of type City, but the City class does not have a property that is a collection of Customer objects. If you have a list of City objects and you want to find all the customers in each city, you could use a join operation to find them.
+
+    The join methods provided in the LINQ framework are Join and GroupJoin. These methods perform equijoins, or joins that match two data sources based on equality of their keys. (For comparison, Transact-SQL supports join operators other than 'equals', for example the 'less than' operator.) In relational database terms, Join implements an inner join, a type of join in which only those objects that have a match in the other data set are returned. The GroupJoin method has no direct equivalent in relational database terms, but it implements a superset of inner joins and left outer joins. A left outer join is a join that returns each element of the first (left) data source, even if it has no correlated elements in the other data source.
+
+    | Method names | Description | C# query expression syntax | More information | 
+    | -- | -- | -- | -- |
+    | Join | Joins two sequences based on key selector functions and extracts pairs of values. |join … in … on … equals … | Enumerable.Join Queryable.Join |
+    | GroupJoin | Joins two sequences based on key selector functions and groups the resulting matches for each element. | join … in … on … equals … into …	 | Enumerable.GroupJoin Queryable.GroupJoin |
+
+    Example:
+    ```csharp
+    class Product
+    {
+        public string Name { get; set; }
+        public int CategoryId { get; set; }
+    }
+
+    class Category
+    {
+        public int Id { get; set; }
+        public string CategoryName { get; set; }
+    }
+
+    public static void Example()
+    {
+        List<Product> products = new List<Product>
+        {
+            new Product { Name = "Cola", CategoryId = 0 },
+            new Product { Name = "Tea", CategoryId = 0 },
+            new Product { Name = "Apple", CategoryId = 1 },
+            new Product { Name = "Kiwi", CategoryId = 1 },
+            new Product { Name = "Carrot", CategoryId = 2 },
+        };
+
+        List<Category> categories = new List<Category>
+        {
+            new Category { Id = 0, CategoryName = "Beverage" },
+            new Category { Id = 1, CategoryName = "Fruit" },
+            new Category { Id = 2, CategoryName = "Vegetable" }
+        };
+
+        // Join products and categories based on CategoryId
+        var query = from product in products
+                    join category in categories on product.CategoryId equals category.Id
+                    select new { product.Name, category.CategoryName };
+
+        foreach (var item in query)
+        {
+            Console.WriteLine($"{item.Name} - {item.CategoryName}");
+        }
+
+        // This code produces the following output:
+        //
+        // Cola - Beverage
+        // Tea - Beverage
+        // Apple - Fruit
+        // Kiwi - Fruit
+        // Carrot - Vegetable
+    }    
+    ```
+    Example - 02:
+    ```csharp
+    class Product
+    {
+        public string Name { get; set; }
+        public int CategoryId { get; set; }
+    }
+
+    class Category
+    {
+        public int Id { get; set; }
+        public string CategoryName { get; set; }
+    }
+
+    public static void Example()
+    {
+        List<Product> products = new List<Product>
+        {
+            new Product { Name = "Cola", CategoryId = 0 },
+            new Product { Name = "Tea", CategoryId = 0 },
+            new Product { Name = "Apple", CategoryId = 1 },
+            new Product { Name = "Kiwi", CategoryId = 1 },
+            new Product { Name = "Carrot", CategoryId = 2 },
+        };
+
+        List<Category> categories = new List<Category>
+        {
+            new Category { Id = 0, CategoryName = "Beverage" },
+            new Category { Id = 1, CategoryName = "Fruit" },
+            new Category { Id = 2, CategoryName = "Vegetable" }
+        };
+
+        // Join categories and product based on CategoryId and grouping result
+        var productGroups = from category in categories
+                            join product in products on category.Id equals product.CategoryId into productGroup
+                            select productGroup;
+
+        foreach (IEnumerable<Product> productGroup in productGroups)
+        {
+            Console.WriteLine("Group");
+            foreach (Product product in productGroup)
+            {
+                Console.WriteLine($"{product.Name,8}");
+            }
+        }
+
+        // This code produces the following output:
+        //
+        // Group
+        //     Cola
+        //      Tea
+        // Group
+        //    Apple
+        //     Kiwi
+        // Group
+        //   Carrot
+    }
+    ```
+
     - **Grouping Data**
+
+    Grouping refers to the operation of putting data into groups so that the elements in each group share a common attribute.
+
+    | Method names | Description | C# query expression syntax | More information | 
+    | -- | -- | -- | -- |
+    | GroupBy | Groups elements that share a common attribute. Each group is represented by an IGrouping\<TKey,TElement> object. | group … by -or- group … by … into …	| Enumerable.GroupBy Queryable.GroupBy |
+    | ToLookup | Inserts elements into a Lookup\<TKey,TElement> (a one-to-many dictionary) based on a key selector function. | Not applicable. | Enumerable.ToLookup |
+
+    Example:
+    ```csharp
+    List<int> numbers = new List<int>() { 35, 44, 200, 84, 3987, 4, 199, 329, 446, 208 };  
+    
+    IEnumerable<IGrouping<int, int>> query = from number in numbers  
+                                            group number by number % 2;  
+    
+    foreach (var group in query)  
+    {  
+        Console.WriteLine(group.Key == 0 ? "\nEven numbers:" : "\nOdd numbers:");  
+        foreach (int i in group)  
+            Console.WriteLine(i);  
+    }  
+    
+    /* This code produces the following output:  
+    
+        Odd numbers:  
+        35  
+        3987  
+        199  
+        329  
+    
+        Even numbers:  
+        44  
+        200  
+        84  
+        4  
+        446  
+        208  
+    */
+    ```
+
     - **Generation Operations**
-    - **Equality Operatios**
+
+    Generation refers to creating a new sequence of values.
+
+    The standard query operator methods that perform generation are listed in the following section.
+
+    | Method names | Description | C# query expression syntax | More information | 
+    | -- | -- | -- | -- |
+    | DefaultIfEmpty | Replaces an empty collection with a default valued singleton collection.	| Not applicable. | Enumerable.DefaultIfEmpty Queryable.DefaultIfEmpty | 
+    | Empty | Returns an empty collection. | Not applicable. | Enumerable.Empty |
+    | Range | Generates a collection that contains a sequence of numbers. | Not applicable. | Enumerable.Range |
+    | Repeat | Generates a collection that contains one repeated value.	| Not applicable. | Enumerable.Repeat |
+
     - **Element Operations**
+
+    Element operations return a single, specific element from a sequence.
+
+    The standard query operator methods that perform element operations are listed in the following section.  
+
+    | Method names | Description | C# query expression syntax | More information | 
+    | -- | -- | -- | -- |  
+    | ElementAt | Returns the element at a specified index in a collection. | Not applicable. | Enumerable.ElementAt Queryable.ElementAt |
+    | ElementAtOrDefault | Returns the element at a specified index in a collection or a default value if the index is out of range. | Not applicable. | Enumerable.ElementAtOrDefault Queryable.ElementAtOrDefault |
+    | First | Returns the first element of a collection, or the first element that satisfies a condition. | Not applicable. |Enumerable.First Queryable.First |
+    | FirstOrDefault | Returns the first element of a collection, or the first element that satisfies a condition. Returns a default value if no such element exists.	| Not applicable. | Enumerable.FirstOrDefault Queryable.FirstOrDefault Queryable.FirstOrDefault\<TSource>(IQueryable\<TSource>) |
+    | Last |Returns the last element of a collection, or the last element that satisfies a condition. | Not applicable. | Enumerable.Last Queryable.Last | 
+    | LastOrDefault | Returns the last element of a collection, or the last element that satisfies a condition. Returns a default value if no such element exists. | Not applicable. | Enumerable.LastOrDefault Queryable.LastOrDefault | 
+    | Single | Returns the only element of a collection or the only element that satisfies a condition. Throws an InvalidOperationException if there is no element or more than one element to return. | Not applicable. | Enumerable.Single Queryable.Single | 
+    | SingleOrDefault | Returns the only element of a collection or the only element that satisfies a condition. Returns a default value if there is no element to return. Throws an InvalidOperationException if there is more than one element to return.	| Not applicable.	 | Enumerable.SingleOrDefault Queryable.SingleOrDefault |
+
     - **Converting Data Types**
+
+    Conversion methods change the type of input objects.
+
+    Conversion operations in LINQ queries are useful in a variety of applications. Following are some examples:
+
+    - The Enumerable.AsEnumerable method can be used to hide a type's custom implementation of a standard query operator.
+
+    - The Enumerable.OfType method can be used to enable non-parameterized collections for LINQ querying.
+
+    - The Enumerable.ToArray, Enumerable.ToDictionary, Enumerable.ToList, and Enumerable.ToLookup methods can be used to force immediate query execution instead of deferring it until the query is enumerated.
+
+    | Method names | Description | C# query expression syntax | More information | 
+    | -- | -- | -- | -- |  
+    | AsEnumerable | Returns the input typed as IEnumerable\<T>. |Not applicable. | Enumerable.AsEnumerable | 
+    | AsQueryable | Converts a (generic) IEnumerable to a (generic) IQueryable.	| Not applicable.	| Queryable.AsQueryable | 
+    | Cast | Casts the elements of a collection to a specified type.	Use an explicitly typed range variable. For example: from string str in words | Enumerable.Cast Queryable.Cast |
+    | OfType | Filters values, depending on their ability to be cast to a specified type. | Not applicable.	| Enumerable.OfType Queryable.OfType |
+    | ToArray | Converts a collection to an array. | This method forces query execution. | Not applicable. | Enumerable.ToArray |
+    | ToDictionary | Puts elements into a Dictionary\<TKey,TValue> based on a key selector function. This method forces query execution.	| Not applicable. | Enumerable.ToDictionary |
+    | ToList | Converts a collection to a List\<T>. This method forces query execution.	| Not applicable. | Enumerable.ToList |
+    | ToLookup | Puts elements into a Lookup\<TKey,TElement> (a one-to-many dictionary) based on a key selector function. This method forces query execution. | Not applicable.	| Enumerable.ToLookup |
+
+    Example:
+    ```csharp
+    class Plant
+    {
+        public string Name { get; set; }
+    }
+
+    class CarnivorousPlant : Plant
+    {
+        public string TrapType { get; set; }
+    }
+
+    static void Cast()
+    {
+        Plant[] plants = new Plant[] {
+            new CarnivorousPlant { Name = "Venus Fly Trap", TrapType = "Snap Trap" },
+            new CarnivorousPlant { Name = "Pitcher Plant", TrapType = "Pitfall Trap" },
+            new CarnivorousPlant { Name = "Sundew", TrapType = "Flypaper Trap" },
+            new CarnivorousPlant { Name = "Waterwheel Plant", TrapType = "Snap Trap" }
+        };
+
+        var query = from CarnivorousPlant cPlant in plants
+                    where cPlant.TrapType == "Snap Trap"
+                    select cPlant;
+
+        foreach (Plant plant in query)
+            Console.WriteLine(plant.Name);
+
+        /* This code produces the following output:
+
+            Venus Fly Trap
+            Waterwheel Plant
+        */
+    }
+    ```
+
     - **Concatenation Operations**
+
+    Concatenation refers to the operation of appending one sequence to another.
+
+    The following illustration depicts a concatenation operation on two sequences of characters.    
+
     - **Aggregation Operations**
+
+    An aggregation operation computes a single value from a collection of values. An example of an aggregation operation is calculating the average daily temperature from a month's worth of daily temperature values.
+
+    | Method names | Description | C# query expression syntax | More information | 
+    | -- | -- | -- | -- |  
+    | Aggregate	| Performs a custom aggregation operation on the values of a collection. | Not applicable. | Enumerable.Aggregate Queryable.Aggregate |
+    | Average | Calculates the average value of a collection of values.	|Not applicable. | Enumerable.Average Queryable.Average |
+    | Count | Counts the elements in a collection, optionally only those elements that satisfy a predicate function. | Not applicable | Enumerable.Count Queryable.Count |
+    | LongCount | Counts the elements in a large collection, optionally only those elements that satisfy a predicate function. | Not applicable. | Enumerable.LongCount Queryable.LongCount | 
+    | Max or MaxBy | Determines the maximum value in a collection. | Not applicable. | Enumerable.Max Enumerable.MaxBy Queryable.Max Queryable.MaxBy |
+    | Min or MinBy | Determines the minimum value in a collection. | Not applicable. | Enumerable.Min Enumerable.MinBy Queryable.Min Queryable.MinBy | 
+    | Sum | Calculates the sum of the values in a collection. | Not applicable.	| Enumerable.Sum Queryable.Sum |

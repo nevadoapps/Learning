@@ -99,10 +99,23 @@ Table of Contents:
     - [Object Oriented Programming with C# - Part 6](docs/CSharpFundamentals/CSharp_Object_Oriented_Programming_Part06.md)
 
         **LINQ to Objects**
-        - LINQ-Specific Programming Constructs
-        - Applying LINQ Queries to Primitive Arrays
-        - Return the Result of a LINQ Query
-        - Applying LING Queries to Collection Objects
+        - What is LINQ (Language Integrated Query)?
+        - Introduction to LINQ Queries
+        - Basic LINQ Query Operations
+        - Standard Query Operators
+            - Sorting Data
+            - Set Operations
+            - Filtering Data
+            - Quantifier Operations
+            - Projection Operations
+            - Partioning Data
+            - Join Operations
+            - Grouping Data
+            - Generation Operations
+            - Element Operations
+            - Converting Data Types
+            - Concatenation Operations
+            - Aggregation Operations
 
 </p>
 </details>
@@ -110,6 +123,15 @@ Table of Contents:
 <details>
 <summary>
 
+## Design Patterns
+</summary>
+<p>
+
+</p>
+</details>
+
+<details>
+<summary>
 
 ## ASP.Net Fundamentals
 </summary>

@@ -8,7 +8,7 @@ Table of contents:
 - Key Interfaces supported by Classes of System.Collections.Generic
 - Working with List\<T>
 - Search and sort lists
-- Implementing a Collection of Key/Value Pairs
+- Implementing a Collection of Key/Value Pairs (Dictionary)
 - Using LINQ to Access Collection
 - Working with the Stack<T> Class
 - Working with the Queue\<T> Class
