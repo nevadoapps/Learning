@@ -343,9 +343,261 @@ public class Rectangle : IDrawable, ITransformable
         // code to resize a rectangle
     }
 }
-
 ````
+
+Example - 02:
+```csharp
+using System;
+
+namespace DotNetDesignPatternDemos.SOLID.InterfaceSegregationPrinciple
+{
+  public class Document
+  {
+  }
+
+  public interface IMachine
+  {
+    void Print(Document d);
+    void Fax(Document d);
+    void Scan(Document d);
+  }
+
+  // ok if you need a multifunction machine
+  public class MultiFunctionPrinter : IMachine
+  {
+    public void Print(Document d)
+    {
+      //
+    }
+
+    public void Fax(Document d)
+    {
+      //
+    }
+
+    public void Scan(Document d)
+    {
+      //
+    }
+  }
+
+  public class OldFashionedPrinter : IMachine
+  {
+    public void Print(Document d)
+    {
+      // yep
+    }
+
+    public void Fax(Document d)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    public void Scan(Document d)
+    {
+      throw new System.NotImplementedException();
+    }
+  }
+
+  public interface IPrinter
+  {
+    void Print(Document d);
+  }
+
+  public interface IScanner
+  {
+    void Scan(Document d);
+  }
+
+  public class Printer : IPrinter
+  {
+    public void Print(Document d)
+    {
+      
+    }
+  }
+
+  public class Photocopier : IPrinter, IScanner
+  {
+    public void Print(Document d)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    public void Scan(Document d)
+    {
+      throw new System.NotImplementedException();
+    }
+  }
+
+  public interface IMultiFunctionDevice : IPrinter, IScanner //
+  {
+    
+  }
+
+  public struct MultiFunctionMachine : IMultiFunctionDevice
+  {
+    // compose this out of several modules
+    private IPrinter printer;
+    private IScanner scanner;
+
+    public MultiFunctionMachine(IPrinter printer, IScanner scanner)
+    {
+      if (printer == null)
+      {
+        throw new ArgumentNullException(paramName: nameof(printer));
+      }
+      if (scanner == null)
+      {
+        throw new ArgumentNullException(paramName: nameof(scanner));
+      }
+      this.printer = printer;
+      this.scanner = scanner;
+    }
+
+    public void Print(Document d)
+    {
+      printer.Print(d);
+    }
+
+    public void Scan(Document d)
+    {
+      scanner.Scan(d);
+    }
+  }
+}
+```
 
 ## (**D**)ependency Inversion Principle
 
-The most flexible systems are the ones where object dependencies only refer to abstractions.
+The dependency inversion principle is a software design principle that states that:
+
+- High-level modules should not depend on low-level modules. Both should depend on abstractions.
+- Abstractions should not depend on details. Details should depend on abstractions.
+
+In C#, the dependency inversion principle can be implemented through the use of abstractions, such as interfaces and base classes. These abstractions allow high-level modules to depend on abstractions rather than on concrete implementations of low-level modules.
+
+For example, consider a system that has a class PaymentProcessor that depends on a class CreditCardProcessor to process credit card payments. The PaymentProcessor class has a direct dependency on the CreditCardProcessor class, which violates the dependency inversion principle. To fix this, we can create an abstraction for the payment processing functionality and have both the PaymentProcessor and CreditCardProcessor classes depend on this abstraction. This way, the PaymentProcessor class is no longer directly dependent on the CreditCardProcessor class, and the dependency between the two classes is inverted.
+
+Here is an example of how this can be implemented in C#:
+
+```csharp
+public interface IPaymentProcessor
+{
+    void ProcessPayment(decimal amount);
+}
+
+public class PaymentProcessor : IPaymentProcessor
+{
+    private readonly IPaymentProcessor _paymentProcessor;
+
+    public PaymentProcessor(IPaymentProcessor paymentProcessor)
+    {
+        _paymentProcessor = paymentProcessor;
+    }
+
+    public void ProcessPayment(decimal amount)
+    {
+        _paymentProcessor.ProcessPayment(amount);
+    }
+}
+
+public class CreditCardProcessor : IPaymentProcessor
+{
+    public void ProcessPayment(decimal amount)
+    {
+        // Process credit card payment
+    }
+}
+```
+
+In this example, the PaymentProcessor class depends on the IPaymentProcessor interface, and the CreditCardProcessor class implements this interface. This allows the PaymentProcessor class to depend on the abstraction rather than on a concrete implementation of the CreditCardProcessor class.
+
+Example - 02:
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using static System.Console;
+
+namespace DotNetDesignPatternDemos.SOLID.DependencyInversionPrinciple
+{
+  // hl modules should not depend on low-level; both should depend on abstractions
+  // abstractions should not depend on details; details should depend on abstractions
+
+  public enum Relationship
+  {
+    Parent,
+    Child,
+    Sibling
+  }
+
+  public class Person
+  {
+    public string Name;
+    // public DateTime DateOfBirth;
+  }
+
+  public interface IRelationshipBrowser
+  {
+    IEnumerable<Person> FindAllChildrenOf(string name);
+  }
+
+  public class Relationships : IRelationshipBrowser // low-level
+  {
+    private List<(Person,Relationship,Person)> relations
+      = new List<(Person, Relationship, Person)>();
+
+    public void AddParentAndChild(Person parent, Person child)
+    {
+      relations.Add((parent, Relationship.Parent, child));
+      relations.Add((child, Relationship.Child, parent));
+    }
+
+    public List<(Person, Relationship, Person)> Relations => relations;
+
+    public IEnumerable<Person> FindAllChildrenOf(string name)
+    {
+      return relations
+        .Where(x => x.Item1.Name == name
+                    && x.Item2 == Relationship.Parent).Select(r => r.Item3);
+    }
+  }
+
+  public class Research
+  {
+    public Research(Relationships relationships) 
+    {
+      // high-level: find all of john's children
+      //var relations = relationships.Relations;
+      //foreach (var r in relations
+      //  .Where(x => x.Item1.Name == "John"
+      //              && x.Item2 == Relationship.Parent))
+      //{
+      //  WriteLine($"John has a child called {r.Item3.Name}");
+      //}
+    }
+
+    public Research(IRelationshipBrowser browser) {
+      foreach (var p in browser.FindAllChildrenOf("John"))
+      {
+        WriteLine($"John has a child called {p.Name}");
+      }
+    }
+
+    static void Main(string[] args)
+    {
+      var parent = new Person {Name = "John"};
+      var child1 = new Person {Name = "Chris"};
+      var child2 = new Person {Name = "Matt"};
+
+      // low-level module
+      var relationships = new Relationships();
+      relationships.AddParentAndChild(parent, child1);
+      relationships.AddParentAndChild(parent, child2);
+
+      new Research((IRelationshipBrowser)relationships);
+    }
+  }
+}
+```
