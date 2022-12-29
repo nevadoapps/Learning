@@ -123,7 +123,34 @@ Table of Contents:
 <details>
 <summary>
 
-## Design Patterns
+## SOLID Principles and Design Patterns
+</summary>
+<p>
+Table of contents:
+
+- [SOLID Principles](docs/SolidnPatterns/SolidPrinciples.md)
+    - (**S**)ingle Responsibility Principle
+    - (**O**)pen-Closed Principle
+    - (**L**)iskov Substitution Principle
+    - (**I**)nterface Segregation Principle
+    - (**D**)ependency Inversion Principle
+- [Design Patterns](docs/SolidnPatterns/DesignPatterns.md)
+  - [Builder](docs/SolidnPatterns/BuilderPattern.md)
+  - [Factory](docs/SolidnPatterns/FactoryPattern.md)
+  - [Singleton](docs/SolidnPatterns/SingletonPattern.md)
+  - [Proxy](docs/SolidnPatterns/ProxyPattern.md)
+  - [Command](docs/SolidnPatterns/CommandPattern.md)
+  - [Publisher/Subscriber](docs/SolidnPatterns/PublisherSubscriberPattern.md)
+  - [Dependency Injection](docs/SolidnPatterns/DependencyInjectionPattern.md)
+  - [Specification](docs/SolidnPatterns/SpecificationPattern.md)
+
+</p>
+</details>
+
+<details>
+<summary>
+
+## Azure
 </summary>
 <p>
 
