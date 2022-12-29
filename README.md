@@ -134,7 +134,7 @@ Table of contents:
     - (**L**)iskov Substitution Principle
     - (**I**)nterface Segregation Principle
     - (**D**)ependency Inversion Principle
-- [Design Patterns](docs/SolidnPatterns/DesignPatterns.md)
+- **Design Patterns**
   - [Builder](docs/SolidnPatterns/BuilderPattern.md)
   - [Factory](docs/SolidnPatterns/FactoryPattern.md)
   - [Singleton](docs/SolidnPatterns/SingletonPattern.md)
