@@ -4,6 +4,10 @@ Table of contents:
 2. Working with Interfaces
     - Obtaining Interface References: The as Keyword
     - Obtaining Interface References: The is Keyword
+    - Interfaces as Parameters
+    - Interfaces as Return Parameters
+    - Arrays of Interface Types
+
 3. Interfaces vs. Abstract Base Classes
 4. Understanding Object Lifetime
 
@@ -317,7 +321,6 @@ static void Main(string[] args)
         Console.WriteLine($"Oops");
 }
 ```
-
 - **Interfaces as Parameters**
 
 The interfaces are valid types, you may construct methods that take interfaces as parameters.
@@ -388,6 +391,64 @@ public class Program
     }
 }
 ```
+- **Interfaces as Return Parameters***
+
+Interfaces can also be used as method return values. For example, you could write a method that takes an array of Shape objects and returns a reference to the first item that supports IPointy.
+
+```csharp
+static IPoint FindFirstPointyShape(Shape[] shapes)
+{
+    foreach(shape s in shapes)
+    {
+        if (s is IPointy ip)
+        {
+            return ip;
+        }
+
+        return null;
+    }
+}
+
+static void Main(string[] args)
+{
+    Shape[] shapes = { new Hexagon(), new Circle(), new Triangle(), new Circle() };
+
+    IPointy firstPointyItem = FindFirstPointyShape(shapes);
+    Console.WriteLine($"The item {firstPointItem?.Points}");
+}
+```
+- **Arrays of Interface Types**
+
+Recall that the same interface can be implemented by numerous types, even if they are not within the same class hierarchy and do not have a common class beyond **System.Object**. This can yield some powerfull programming construct. For example, assume you have developed three new class types within you current project that model kitchen utensils (via Knife and Fork classes) and another modeling gardening equipment. 
+
+Example:
+```csharp
+class Fork: IPointy
+{
+    public byte Points => 4;
+}
+
+class PitchFork: IPointy
+{
+    public byte Points => 3;
+}
+
+class Knife: IPointy
+{
+    public byte Points => 1;
+}
+
+static void Main(string[] args)
+{
+    IPoint[] myPointyObjects = { new Knife(), new PitchFork(), new Fork() };
+
+    foreach(IPointy i in myPointyObjects)
+    {
+        Console.WriteLine($"Object has {i.Points}");
+    }
+}
+```
+
 - **Explicit Interface Implementation**
 
 A class or structure can implement any number of interfaces. Given this, there is always the possibility you might implement interfaces that contain identical member and, there have a name class to contend with.
