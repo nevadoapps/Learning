@@ -175,5 +175,9 @@ Table of contents:
 </summary>
 <p>
 
+- **AutoFac**
+- **SeriLog**
+- **FluentValidation**
+- **AutMapper**
 </p>
 </details>
