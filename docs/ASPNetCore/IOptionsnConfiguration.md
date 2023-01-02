@@ -53,16 +53,16 @@ string connectionString = _config.GetConnectionString("DefaultConnection");
 **What is IOptions\<T>, IOptionsSnapshot\<T>, IOptionsMonitor\<T>?**
 
 - **Options interfaces**
-    - IOptions\<TOptions>:
+    - **IOptions\<TOptions>**:
         - Does not support:
             - Reading of configuration data after the app has started.
             - Named options
         - Is registered as a Singleton and can be injected into any service lifetime.
-    - IOptionsSnapshot\<TOptions>:
+    - **IOptionsSnapshot\<TOptions>**:
         - Is useful in scenarios where options should be recomputed on every injection resolution, in scoped or transient lifetimes. For more information, see Use IOptionsSnapshot to read updated data.
         - Is registered as Scoped and therefore cannot be injected into a Singleton service. 
         - Supports named options
-    - IOptionsMonitor\<TOptions>:
+    - **IOptionsMonitor\<TOptions>**:
         - Is used to retrieve options and manage options notifications for **TOptions** instances.
         - Is registered as a Singleton and can be injected into any service lifetime.
         - Supports:
@@ -72,9 +72,9 @@ string connectionString = _config.GetConnectionString("DefaultConnection");
             - Selective options invalidation (IOptionsMonitorCache\<TOptions>)
 - **Options interfaces benefits**
 
-Using a generic wrapper type gives you the ability to decouple the lifetime of the option from the DI container. The IOptions<TOptions>.Value interface provides a layer of abstraction, including generic constraints, on your options type. This provides the following benefits:
+Using a generic wrapper type gives you the ability to decouple the lifetime of the option from the DI container. The **IOptions\<TOptions>**.Value interface provides a layer of abstraction, including generic constraints, on your options type. This provides the following benefits:
 
-- The evaluation of the T configuration instance is deferred to the accessing of IOptions\<TOptions>.Value, rather than when it is injected. This is important because you can consume the T option from various places and choose the lifetime semantics without changing anything about T.
+- The evaluation of the T configuration instance is deferred to the accessing of **IOptions\<TOptions>**.Value, rather than when it is injected. This is important because you can consume the T option from various places and choose the lifetime semantics without changing anything about T.
 - When registering options of type T, you do not need to explicitly register the T type. This is a convenience when you're authoring a library with simple defaults, and you don't want to force the caller to register options into the DI container with a specific lifetime.
 - From the perspective of the API, it allows for constraints on the type T (in this case, T is constrained to a reference type).   
 

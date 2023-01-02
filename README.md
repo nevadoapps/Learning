@@ -166,7 +166,7 @@ Table of contents:
 
 - [Testing ASP.Net Core Application](docs/ASPNetCore/ASPNetCore_Testing.md)
 - [Dependency Injection over Extension](docs/ASPNetCore/DependencyInjection_over_Extensions.md)
-- [Configation and IOptions, IOptionsSnapshot, IOptionsMonitor](docs/ASPNetCore/IOptionsnConfiguration.md)
+- [Configuration and IOptions, IOptionsSnapshot, IOptionsMonitor](docs/ASPNetCore/IOptionsnConfiguration.md)
 </p>
 </details>
 
