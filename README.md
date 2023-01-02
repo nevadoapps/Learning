@@ -165,6 +165,7 @@ Table of contents:
 <p>
 
 - [Testing ASP.Net Core Application](docs/ASPNetCore/ASPNetCore_Testing.md)
+- [Dependency Injection over Extension](docs/ASPNetCore/DependencyInjection_over_Extensions.md)
 </p>
 </details>
 
