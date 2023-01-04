@@ -107,5 +107,6 @@ public sealed class ScopedService
 }
 ```
 
-**How to bind & register configuration as service in AppSettings.json to custom class with different ways?**
+**How to bind & register configuration as service from AppSettings.json to custom class with different ways?**
 
+- **First Way**
