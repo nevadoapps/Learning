@@ -30,7 +30,8 @@ Table of Contents:
     - The Null-Coalescing Assigment Operator (8.0)
     - The Conditional Operator
     - The Default Keyword
-15. Tuples (Not documented yet!)    
+15. Tuples (Not documented yet!)
+16. Records (Not documented yet!)
 
 <details>
 <summary>
@@ -1037,5 +1038,204 @@ Console.WriteLine(sum3);  // output: NaN
     */
 }
 ```
+</p>
+</details>
+
+<details>
+<summary>
+
+## 14. Tuples (Not documented yet!)
+</summary>
+<p>
+</p>
+</details>
+
+<details>
+<summary>
+
+## 15.Records (Not documented yet!)
+</summary>
+<p>
+
+Beginning with C# 9, you use the **record** keyword to define a **reference type** that provides built-in functionality for encapsulating data. C# 10 allows the **record class** syntax as a synonym to clarify a reference type, and **record struct** to define a value type with similar functionality. 
+
+The following two examples demonstrate record (or record class) reference types:
+```csharp
+public record Person(string FirstName, string LastName);
+
+//or 
+
+public record Person
+{
+    public string FirstName { get; init; } = default!;
+    public string LastName { get; init; } = default!;
+};
+```
+
+While records can be mutable, they're primarily intended for supporting immutable data models. The record type offers the following features:
+
+Concise syntax for creating a reference type with immutable properties
+Built-in behavior useful for a data-centric reference type:
+- Value equality
+- Concise syntax for nondestructive mutation
+- Built-in formatting for display
+- Support for inheritance hierarchies
+
+**Value equality of Records**
+
+
+If you don't override or replace equality methods, the type you declare governs how equality is defined:
+
+- For class types, two objects are equal if they refer to the same object in memory.
+- For struct types, two objects are equal if they are of the same type and store the same values.
+- For record types, including record struct and readonly record struct, two objects are equal if they are of the same type and store the same values.
+
+The definition of equality for a **record struct** is the same as for a struct. The difference is that for a **struct**, the implementation is in ValueType.Equals(Object) and relies on reflection. For records, the implementation is compiler synthesized and uses the declared data members.
+
+Reference equality is required for some data models. For example, Entity Framework Core depends on reference equality to ensure that it uses only one instance of an entity type for what is conceptually one entity. **For this reason, records and record structs aren't appropriate for use as entity types in Entity Framework Core.**
+
+The following example illustrates value equality of record types:
+
+```csharp
+public record Person(string FirstName, string LastName, string[] PhoneNumbers);
+
+public static void Main()
+{
+    var phoneNumbers = new string[2];
+    Person person1 = new("Nancy", "Davolio", phoneNumbers);
+    Person person2 = new("Nancy", "Davolio", phoneNumbers);
+    Console.WriteLine(person1 == person2); // output: True
+
+    person1.PhoneNumbers[0] = "555-1234";
+    Console.WriteLine(person1 == person2); // output: True
+
+    Console.WriteLine(ReferenceEquals(person1, person2)); // output: False
+}
+```
+
+To implement value equality, the compiler synthesizes several methods, including:
+
+- An override of **Object.Equals(Object)**. It is an error if the override is declared explicitly.
+
+This method is used as the basis for the **Object.Equals(Object, Object)** static method when both parameters are non-null.
+
+- A **virtual**, or **sealed**, Equals(R? other) where R is the record type. This method implements **IEquatable\<T>**. This method can be declared explicitly.
+
+- If the record type is derived from a base record type Base, **Equals(Base? other)**. It is an error if the override is declared explicitly. If you provide your own implementation of **Equals(R? other)**, provide an implementation of GetHashCode also.
+
+- An override of **Object.GetHashCode()**. This method can be declared explicitly.
+
+- Overrides of operators == and !=. It is an error if the operators are declared explicitly.
+
+- If the record type is derived from a base record type, **protected override Type EqualityContract { get; };**. This property can be declared explicitly. For more information, see Equality in inheritance hierarchies.
+
+If a record type has a method that matches the signature of a synthesized method allowed to be declared explicitly, the compiler doesn't synthesize that method.
+
+**Built-in formatting for display**
+
+Record types have a compiler-generated ToString method that displays the names and values of public properties and fields. The ToString method returns a string of the following format:
+
+**\<record type name> { \<property name> = \<value>, \<property name> = \<value>, ...}**
+
+
+The string printed for \<value> is the string returned by the ToString() for the type of the property. In the following example, ChildNames is a System.Array, where ToString returns System.String[]:
+
+```csharp
+Person { FirstName = Nancy, LastName = Davolio, ChildNames = System.String[] }
+```
+
+**Inheritance**
+This section only applies to record class types.
+
+A record can inherit from another record. However, a record can't inherit from a class, and a class can't inherit from a record.
+
+**With Expression** 
+A with expression produces a copy of its operand with the specified properties and fields modified. you use object initializer syntax to specify what members to modify and their new values:
+
+```csharp
+using System;
+
+public class WithExpressionBasicExample
+{
+    public record NamedPoint(string Name, int X, int Y);
+
+    public static void Main()
+    {
+        var p1 = new NamedPoint("A", 0, 0);
+        Console.WriteLine($"{nameof(p1)}: {p1}");  // output: p1: NamedPoint { Name = A, X = 0, Y = 0 }
+        
+        var p2 = p1 with { Name = "B", X = 5 };
+        Console.WriteLine($"{nameof(p2)}: {p2}");  // output: p2: NamedPoint { Name = B, X = 5, Y = 0 }
+        
+        var p3 = p1 with 
+            { 
+                Name = "C", 
+                Y = 4 
+            };
+        Console.WriteLine($"{nameof(p3)}: {p3}");  // output: p3: NamedPoint { Name = C, X = 0, Y = 4 }
+
+        Console.WriteLine($"{nameof(p1)}: {p1}");  // output: p1: NamedPoint { Name = A, X = 0, Y = 0 }
+
+        var apples = new { Item = "Apples", Price = 1.19m };
+        Console.WriteLine($"Original: {apples}");  // output: Original: { Item = Apples, Price = 1.19 }
+        var saleApples = apples with { Price = 0.79m };
+        Console.WriteLine($"Sale: {saleApples}");  // output: Sale: { Item = Apples, Price = 0.79 }
+    }
+}
+```
+
+In C# 9.0, a left-hand operand of a with expression must be of a record type. Beginning with C# 10, a left-hand operand of a with expression can also be of a structure type or an anonymous type.
+
+The result of a with expression has the same run-time type as the expression's operand, as the following example shows:
+
+```csharp
+using System;
+
+public class InheritanceExample
+{
+    public record Point(int X, int Y);
+    public record NamedPoint(string Name, int X, int Y) : Point(X, Y);
+
+    public static void Main()
+    {
+        Point p1 = new NamedPoint("A", 0, 0);
+        Point p2 = p1 with { X = 5, Y = 3 };
+        Console.WriteLine(p2 is NamedPoint);  // output: True
+        Console.WriteLine(p2);  // output: NamedPoint { X = 5, Y = 3, Name = A }
+    }
+}
+```
+
+**with Expression in derived records**
+
+The result of a with expression has the same run-time type as the expression's operand. All properties of the run-time type get copied, but you can only set properties of the compile-time type, as the following example shows:
+
+```csharp
+public record Point(int X, int Y)
+{
+    public int Zbase { get; set; }
+};
+public record NamedPoint(string Name, int X, int Y) : Point(X, Y)
+{
+    public int Zderived { get; set; }
+};
+
+public static void Main()
+{
+    Point p1 = new NamedPoint("A", 1, 2) { Zbase = 3, Zderived = 4 };
+
+    Point p2 = p1 with { X = 5, Y = 6, Zbase = 7 }; // Can't set Name or Zderived
+    Console.WriteLine(p2 is NamedPoint);  // output: True
+    Console.WriteLine(p2);
+    // output: NamedPoint { X = 5, Y = 6, Zbase = 7, Name = A, Zderived = 4 }
+
+    Point p3 = (NamedPoint)p1 with { Name = "B", X = 5, Y = 6, Zbase = 7, Zderived = 8 };
+    Console.WriteLine(p3);
+    // output: NamedPoint { X = 5, Y = 6, Zbase = 7, Name = B, Zderived = 8 }
+}
+```
+
+**Generic Constraints**
+There's no generic constraint that requires a type to be a record. Records satisfy either the class or struct constraint. To make a constraint on a specific hierarchy of record types, put the constraint on the base record as you would a base class. For more information, see Constraints on type parameters.
 </p>
 </details>
