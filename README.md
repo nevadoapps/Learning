@@ -40,6 +40,10 @@ no changes added to commit (use "git add" and/or "git commit -a")
 **Git Checkout**
 Switch branches or restore working tree files
 
+Updates files in the working tree to match the version in the index or the specified tree. If no pathspec was given, git checkout will also update HEAD to set the specified branch as the current branch.
+
+git checkout \<branch>
+
 ```bash
 git checkout main
 
@@ -51,6 +55,9 @@ Your branch is up to date with 'origin/main'.
 **Git Branch**
 git-branch - List, create, or delete branches
 
+git branch \<new branch name>
+git branch --list
+
 - Get list of branches
 ```bash
 git branch --list
@@ -59,7 +66,10 @@ git branch --list
 ```
 
 **Git Log**
+Lists the log of the current branch
+
 ```bash
+git log
 git log --all --oneline
 ```
 
