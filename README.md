@@ -15,6 +15,51 @@ Here is the list of topics being covered within the repository.
 <details>
 <summary>
 
+## Git Commands & Usage Documentation
+</summary>
+<p>
+</p>
+</details>
+
+**Git Status**
+Show the working tree status
+
+```bash
+git status
+On branch Main
+Your branch is up to date with 'origin/Main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+**Git Checkout**
+Switch branches or restore working tree files
+
+```bash
+git checkout main
+
+Switched to branch 'main'
+M       README.md
+Your branch is up to date with 'origin/main'.
+```
+
+**Git Branch**
+git-branch - List, create, or delete branches
+
+- Get list of branches
+```bash
+git branch --list
+  Main---Learning---1412_01
+* main
+```
+<details>
+<summary>
+
 ## C# Fundamentals
 </summary>
 <p>
