@@ -22,3 +22,4 @@ The Singleton pattern is a design pattern that ensures that a class has only one
 - Need to take care of lazy instantiation and thread safety
 
 ## Implementation of Singleton Pattern
+
