@@ -40,6 +40,10 @@ no changes added to commit (use "git add" and/or "git commit -a")
 **Git Checkout**
 Switch branches or restore working tree files
 
+Updates files in the working tree to match the version in the index or the specified tree. If no pathspec was given, git checkout will also update HEAD to set the specified branch as the current branch.
+
+git checkout \<branch>
+
 ```bash
 git checkout main
 
@@ -51,11 +55,48 @@ Your branch is up to date with 'origin/main'.
 **Git Branch**
 git-branch - List, create, or delete branches
 
+git branch \<new branch name>
+git branch --list
+
 - Get list of branches
 ```bash
 git branch --list
   Main---Learning---1412_01
 * main
+```
+
+**Git Log**
+Lists the log of the current branch
+
+```bash
+git log
+git log --all --oneline
+```
+
+**Git Stash**
+Stash the changes in a dirty working directory away. Use git stash when you want to record the current state of the working directory and the index, but want to go back to a clean working directory. The command saves your local modifications away and reverts the working directory to match the HEAD commit.
+
+The modifications stashed away by this command can be listed with git stash list, inspected with git stash show, and restored (potentially on top of a different commit) with git stash apply. Calling git stash without any arguments is equivalent to git stash push. A stash is by default listed as "WIP on branchname …​", but you can give a more descriptive message on the command line when you create one.
+
+```bash
+git stash list //show the stash list
+
+
+```
+
+**Git Branch**
+List, create, or delete branches
+
+If --list is given, or if there are no non-option arguments, existing branches are listed; the current branch will be highlighted in green and marked with an asterisk. Any branches checked out in linked worktrees will be highlighted in cyan and marked with a plus sign. Option -r causes the remote-tracking branches to be listed, and option -a shows both local and remote branches.
+
+If a <pattern> is given, it is used as a shell wildcard to restrict the output to matching branches. If multiple patterns are given, a branch is shown if it matches any of the patterns.
+
+Note that when providing a <pattern>, you must use --list; otherwise the command may be interpreted as branch creation.
+
+```bash
+git branch --list //List the branches in Git local
+
+git branch <New Branch Name> //Creates a branch from the branch you are currently working on
 ```
 <details>
 <summary>
