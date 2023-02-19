@@ -18,8 +18,6 @@ Here is the list of topics being covered within the repository.
 ## Git Commands & Usage Documentation
 </summary>
 <p>
-</p>
-</details>
 
 **Git Status**
 Show the working tree status
@@ -80,8 +78,6 @@ The modifications stashed away by this command can be listed with git stash list
 
 ```bash
 git stash list //show the stash list
-
-
 ```
 
 **Git Branch**
@@ -98,6 +94,9 @@ git branch --list //List the branches in Git local
 
 git branch <New Branch Name> //Creates a branch from the branch you are currently working on
 ```
+</p>
+</details>
+
 <details>
 <summary>
 
