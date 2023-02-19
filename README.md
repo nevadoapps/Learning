@@ -1,12 +1,5 @@
 # Welcome to Learning Platform
 
-<<<<<<< HEAD
-Date: 19022023 - HSY
-=======
->>>>>>> 0eb39dd2350b25e207d68b353777827f51f2ea0d
-
-Date: 18.02.2023 - HSY / 2
-
 Here is the list of topics being covered within the repository.
 <details>
 <summary>
