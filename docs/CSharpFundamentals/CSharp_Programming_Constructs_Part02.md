@@ -430,7 +430,7 @@ Reference parameters are necessary when you want to allow a method to operate on
 **Notes:**
 - Output parameters do not need to be initialized before they are passed to the method. The reason for this is that the method must assign output parameters before exiting.
 - Reference parameters must be initialized before they are passed to the method. The reason for this is that you are passing a reference to an existing variable. If you don't assign it to an initial value, that would be the equivalent of operating on an unassigned local variable.
-- The ref keyword cannot be used on the first argument on an extesion method when the argument is not a struct, or a generic type not constrained to be a struct.
+- The ref keyword cannot be used on the first argument on an extension method when the argument is not a struct, or a generic type not constrained to be a struct.
 - You cannot use the out keyword for the following kinds of methods:
   - Async methods which you define by using the async modifier
   - Iterator methods, which include a yield return or yield break statement.
@@ -639,6 +639,14 @@ When you assign one value type to another, a member-by-member copy of the field 
 
 A variable of a value type contains an instance of the type. This differs from a variable of a reference type, which contains a reference to an instance of the type. By default, on **assignment**, passing an argument to a method, and returning a method result, variable values are copied. The case of value-type variables, the corresponding type instances are copied.
 
+**When you pass a value type by value:**
+- If the method assigns the parameter to refer to a different object, those changes aren't visible from the caller.
+- If the method modifies the state of the object referred to by the parameter, those changes aren't visible from the caller.
+
+**When you pass a value type by reference:**
+- If the method assigns the parameter to refer to a different object, those changes aren't visible from the caller.
+- If the method modifies the state of the object referred to by the parameter, those changes are visible from the caller.
+
 Example:
 ```csharp
 using System;
@@ -722,6 +730,11 @@ public class Program
 ```
 
 - ## Passing Reference Types by Value
+
+**When you pass a reference type by value:**
+- If the method assigns the parameter to refer to a different object, those changes aren't visible from the caller.
+- If the method modifies the state of the object referred to by the parameter, those changes are visible from the caller.
+
 Example:
 ```csharp
 class Person
@@ -797,6 +810,10 @@ Current state of Fred Instance of type Person - >Name: Fred, Age: 101
 ```
 
 - ## Passing Reference Types by Reference
+
+**When you pass a reference type by reference:**
+- If the method assigns the parameter to refer to a different object, those changes are visible from the caller.
+- If the method modifies the state of the object referred to by the parameter, those changes are visible from the caller.
 
 ```csharp
 class Person
