@@ -43,9 +43,9 @@ C# is an object-oriented programming language. The four principles of object-ori
 
 - ## Introducing the C# class type
 
-The most fundamental programming structure is the class type. A class us a user-defined type that is composed of field data (member variables) and members that operate on this data (such as constructors, properties, methods, events, etc.)
+The most fundamental programming structure is the class type. A class is a user-defined type that is composed of field data (member variables) and members that operate on this data (such as constructors, properties, methods, events, etc.)
 
-Colletively, the set of field data represents the **state* of a class instance (otherwise known as an object).
+Collectively, the set of field data represents the **state* of a class instance (otherwise known as an object).
 
 Example:
 ```csharp
@@ -178,7 +178,7 @@ public class Car
 - ## Understanding the static keyword
 A C# class may define any number of static members, which are declared using the **static** keyword. Simply put. static members are items that are deemed to be so commonplace that there is no need to create an instance of the class before invoking the member.
 
-By definition, a utility class ise a class that does not maintain any object-level state and is not created with the new keyword. Rather, a utility class exposes all functionality as class-level (not object level) members.
+By definition, a utility class is a class that does not maintain any object-level state and is not created with the new keyword. Rather, a utility class exposes all functionality as class-level (not object level) members.
 
 The **static** keyword can be applied to the following:
     - Data of a class
@@ -331,6 +331,40 @@ public class Program
         book.SetBookPages(1000);
         Console.WriteLine(book.ToString());
     }
+}
+```
+- ## Init Only Properties
+In C# 9 and later, the init keyword defines an accessor method in a property or indexer. An init-only setter assigns a value to the property or the indexer element only during object construction. This enforces immutability, so that once the object is initialized, it can't be changed again.
+
+The following example defines both a get and an init accessor for a property named YearOfBirth. It uses a private field named _yearOfBirth to back the property value.
+
+Example:
+```csharp
+class Person_InitExample
+{
+     private int _yearOfBirth;
+
+     public int YearOfBirth
+     {
+         get { return _yearOfBirth; }
+         init { _yearOfBirth = value; }
+     }
+}
+
+var john = new Person_InitExample
+{
+    YearOfBirth = 1984
+};
+
+john.YearOfBirth = 1926; //Not allowed, as its value can only be set once in the constructor
+```
+The init accessor can also be used in auto-implemented properties as the following example code demonstrates:
+
+Example:
+```csharp
+class Person_InitExampleAutoProperty
+{
+    public int YearOfBirth { get; init; }
 }
 ```
 - ## Read-Only and Write-Only Properties
